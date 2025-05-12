@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+<!-- Hereda la estructura base de la aplicación desde base.html (barra lateral, estilos, etc.) -->
+
+{% block content %}
+<!-- Inicia el bloque de contenido específico para esta página -->
+
+<h1 class="mb-4 text-center">Editar Gasto</h1>
+<!-- Título centrado con margen inferior que indica la función de esta vista -->
+
+<form action="{{ url_for('editar_gasto', id=gasto.id) }}" method="POST" class="row g-3 mb-5">
+    <!-- Formulario que se envía mediante método POST a la ruta 'editar_gasto', pasando el id del gasto -->
+    <!-- Usa Bootstrap para distribuir los campos en una fila con espaciado entre columnas (g-3) y margen inferior (mb-5) -->
+
+    <div class="col-md-8">
+        <!-- Columna de 8/12 partes del ancho -->
+        <label for="descripcion" class="form-label">Descripción del Gasto</label>
+        <!-- Etiqueta del campo de descripción -->
+        <input type="text" id="descripcion" class="form-control" name="descripcion" value="{{ gasto.descripcion }}" required>
+        <!-- Campo de texto con el valor actual del gasto precargado. Es obligatorio. -->
+    </div>
+
+    <div class="col-md-4">
+        <!-- Columna de 4/12 partes del ancho -->
+        <label for="valor" class="form-label">Valor ($)</label>
+        <!-- Etiqueta para el campo de valor -->
+        <input type="number" id="valor" class="form-control" name="valor" value="{{ gasto.valor }}" required>
+        <!-- Campo numérico con el valor actual precargado. También es obligatorio. -->
+    </div>
+
+    <div class="col-md-12">
+        <!-- Columna de ancho completo (12 columnas) -->
+        <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+        <!-- Botón verde que ocupa todo el ancho del contenedor para guardar los cambios del gasto -->
+    </div>
+</form>
+
+<a href="{{ url_for('gastos') }}" class="btn btn-secondary">Volver al listado de gastos</a>
+<!-- Enlace que regresa al listado general de gastos, con estilo de botón gris -->
+
+{% endblock %}
+<!-- Fin del bloque de contenido -->

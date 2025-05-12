@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+<!-- Hereda la plantilla base con la barra lateral, estilos y estructura general -->
+
+{% block content %}
+<!-- Inicia el bloque que será insertado en el contenedor principal definido en base.html -->
+
+<h1 class="mb-4 text-center">Editar Producto</h1>
+<!-- Título centrado con margen inferior que indica la acción actual (editar producto) -->
+
+<form action="{{ url_for('editar', id=producto.id) }}" method="POST" class="row g-3 mb-5">
+    <!-- Formulario que se enviará mediante POST al endpoint 'editar' con el id del producto -->
+    <!-- Bootstrap distribuye los campos en una fila con espaciado entre columnas (g-3) -->
+
+    <div class="col-md-6">
+        <!-- Columna que ocupa la mitad del ancho (6 columnas de 12) -->
+        <label for="nombre" class="form-label">Nombre del Producto</label>
+        <input type="text" id="nombre" class="form-control" name="nombre" value="{{ producto.nombre }}" required>
+        <!-- Campo de texto con el nombre actual del producto precargado. Obligatorio -->
+    </div>
+
+    <div class="col-md-3">
+        <!-- Columna de 3/12 partes del ancho -->
+        <label for="precio_compra" class="form-label">Precio de Compra</label>
+        <input type="number" step="0.01" id="precio_compra" class="form-control" name="precio_compra" value="{{ producto.precio_compra }}" required>
+        <!-- Campo numérico con decimales, precargado con el valor actual de compra. Obligatorio -->
+    </div>
+
+    <div class="col-md-3">
+        <!-- Columna de 3/12 partes del ancho -->
+        <label for="ganancia" class="form-label">Porcentaje de Ganancia (%)</label>
+        {% set ganancia_percent = ((producto.precio_venta - producto.precio_compra) / producto.precio_compra) * 100 %}
+        <!-- Cálculo del porcentaje de ganancia basado en precio de venta y compra -->
+        <input type="number" step="0.01" id="ganancia" class="form-control" name="ganancia" value="{{ ganancia_percent | round(2) }}" required>
+        <!-- Campo numérico con decimales, precargado con el porcentaje calculado. Obligatorio -->
+    </div>
+
+    <div class="col-md-3">
+        <!-- Columna para la cantidad de stock -->
+        <label for="stock" class="form-label">Stock</label>
+        <input type="number" id="stock" class="form-control" name="stock" value="{{ producto.stock }}" required>
+        <!-- Campo numérico para stock disponible. Obligatorio -->
+    </div>
+
+    <div class="col-md-6">
+        <!-- Columna de media fila para categoría -->
+        <label for="categoria" class="form-label">Categoría</label>
+        <input type="text" id="categoria" class="form-control" name="categoria" value="{{ producto.categoria }}">
+        <!-- Campo de texto opcional con el valor actual de la categoría -->
+    </div>
+
+    <div class="col-md-6">
+        <!-- Columna para el botón de guardar -->
+        <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+        <!-- Botón verde que envía el formulario. Ocupa todo el ancho disponible -->
+    </div>
+</form>
+
+<a href="{{ url_for('index') }}" class="btn btn-secondary">Volver a la lista de productos</a>
+<!-- Botón gris que lleva de vuelta a la lista de productos -->
+
+{% endblock %}
+<!-- Finaliza el bloque de contenido -->

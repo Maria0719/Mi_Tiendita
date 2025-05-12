@@ -1,0 +1,92 @@
+/* Estilo general de la app */
+body {
+    background-color: #fdfaf6;                  /* Color de fondo claro para toda la página */
+    font-family: 'Segoe UI', 'Roboto', sans-serif;  /* Tipografía principal y alternativas */
+    color: #2c3e50;                             /* Color de texto predeterminado */
+    padding-bottom: 50px;                       /* Espacio inferior para evitar que el contenido quede pegado al borde */
+}
+
+/* Encabezados */
+h1, h2, h3, h4 {
+    font-weight: 600;      /* Grosor de fuente medio-alto para destacar títulos */
+    color: #34495e;        /* Color ligeramente más oscuro para encabezados */
+}
+
+/* Estilo de tablas */
+table.table {
+    background-color: #ffffff;                  /* Fondo blanco para las tablas */
+    border-radius: 10px;                        /* Bordes redondeados */
+    overflow: hidden;                           /* Oculta contenido desbordado (por el redondeo) */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);     /* Sombra sutil para dar profundidad */
+}
+
+table th {
+    background-color: #ecf0f1;                  /* Fondo gris claro para encabezados */
+    color: #2c3e50;                             /* Color de texto oscuro */
+    text-align: center;                         /* Centrado horizontal del texto */
+    font-weight: bold;                          /* Texto en negrita */
+}
+
+table td {
+    text-align: center;                         /* Celdas centradas horizontalmente */
+    vertical-align: middle;                     /* Celdas centradas verticalmente */
+}
+
+/* Botones */
+.btn {
+    border-radius: 8px;                         /* Bordes redondeados para todos los botones */
+    font-weight: 500;                           /* Grosor medio para el texto del botón */
+}
+
+.btn-primary {
+    background-color: #7162e6e2;                /* Color morado suave para botón primario */
+    border: none;                               /* Sin borde adicional */
+}
+
+.btn-success {
+    background-color: #00b894;                  /* Verde brillante para acciones exitosas */
+    border: none;
+}
+
+.btn-danger {
+    background-color: #d63031;                  /* Rojo para acciones destructivas (como eliminar) */
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #b2bec3;                  /* Gris para acciones secundarias */
+    border: none;
+}
+
+/* Formularios */
+input.form-control, select.form-control, textarea.form-control {
+    border-radius: 8px;                         /* Bordes redondeados en todos los campos */
+    border: 1px solid #dfe6e9;                  /* Borde gris claro */
+    padding: 10px;                              /* Espaciado interno para mejorar la legibilidad */
+}
+
+/* Tarjetas de gráficas */
+.card {
+    border-radius: 12px;                        /* Tarjetas con esquinas redondeadas */
+    border: none;                               /* Sin borde visible */
+    background-color: #ffffff;                  /* Fondo blanco */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);     /* Sombra ligera para levantar visualmente la tarjeta */
+}
+
+.card-title {
+    font-size: 1.25rem;                         /* Tamaño de fuente moderado para el título */
+    color: #2d3436;                             /* Color gris oscuro para mayor contraste */
+}
+
+/* Flash messages (mensajes de notificación) */
+.alert-success {
+    background-color: #dff9fb;                  /* Fondo azul claro para mensaje de éxito */
+    color: #27ae60;                             /* Texto en verde para denotar éxito */
+    border: none;
+}
+
+.alert-danger {
+    background-color: #fab1a0;                  /* Fondo rojo claro para mensaje de error */
+    color: #c0392b;                             /* Texto rojo oscuro para advertencia o error */
+    border: none;
+}

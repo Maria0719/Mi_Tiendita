@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+<!-- Hereda la estructura principal que incluye la barra lateral y estilos base -->
+
+{% block content %}
+<!-- Inicia el bloque de contenido principal -->
+
+<div class="container my-5">
+    <!-- Contenedor con márgenes verticales para separación -->
+
+    <h2 class="text-center mb-4">📊 Resumen de Inventario</h2>
+    <!-- Título centrado con un ícono decorativo -->
+
+    <div class="p-4 bg-light rounded shadow-sm">
+        <!-- Caja con fondo claro, bordes redondeados y sombra -->
+
+        <p><strong>Total de Valor de Compra:</strong> 
+            {{ "{:,.0f}".format(valor_compra_total or 0) }}<br>
+            <!-- Muestra el valor total invertido en compras, usando formato de número -->
+
+            <small class="text-muted">
+                💰 Es la suma del precio de compra de todos los productos multiplicado por su stock.
+            </small>
+            <!-- Descripción explicativa del dato -->
+        </p>
+
+        <p><strong>Total de Valor de Venta:</strong> 
+            {{ "{:,.0f}".format(valor_venta_total or 0) }}<br>
+            <!-- Muestra el total potencial de ingresos si se vende todo -->
+
+            <small class="text-muted">
+                📦 Representa cuánto dinero ingresarías si vendieras todo el inventario al precio actual de venta.
+            </small>
+        </p>
+
+        <p><strong>Total de Gastos:</strong> 
+            {{ "{:,.0f}".format(total_gastos or 0) }}<br>
+            <!-- Muestra la suma total de los gastos registrados -->
+
+            <small class="text-muted">
+                🧾 Suma total de los gastos registrados, como servicios, compras operativas, etc.
+            </small>
+        </p>
+
+        <hr>
+        <!-- Línea separadora para destacar la ganancia -->
+
+        <p><strong>Total de Ganancias (netas):</strong> 
+            {{ "{:,.0f}".format(ganancias_total or 0) }}<br>
+            <!-- Muestra el resultado de venta - compra - gastos -->
+
+            <small class="text-muted">
+                📈 Esta es tu utilidad estimada si vendes todo el inventario y descuentas los gastos.
+            </small>
+        </p>
+    </div>
+
+    <div class="text-center mt-4">
+        <!-- Botón centrado al final para volver -->
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">⬅ Volver al inicio</a>
+    </div>
+</div>
+
+{% endblock %}
+<!-- Fin del bloque de contenido -->
