@@ -2,112 +2,303 @@
 
 {% block content %}
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(to bottom, #6c63ff, #a29bfe);
-        color: #ffffff;
-    }
-
-    .inicio-section {
-        padding: 80px 20px;
+    /* === HERO SECCIÓN ESTILO PARARICE === */
+    .hero-divertido {
+        position: relative;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #a29bfe 0%, #d0c4ff 100%);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-    }
-
-    .logo {
-        max-width: 180px;
-        margin-bottom: 30px;
-    }
-
-    .info-section {
         padding: 60px 20px;
+        color: #2c2c54;
+        z-index: 1;
     }
 
-    .info-section h2 {
-        font-weight: 700;
-        font-size: 2.2rem;
-        margin-bottom: 25px;
-        color: #fff;
-    }
-
-    .info-text p {
-        font-size: 1.1rem;
-        color: #f0f0f0;
-        margin-bottom: 0;
-    }
-
-    .img-grafico {
+    .hero-divertido::before {
+        content: "";
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.1;
+        position: absolute;
+        top: 0; left: 0;
         width: 100%;
-        max-width: 500px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        height: 100%;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
     }
 
-    @media (min-width: 768px) {
-        .info-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 50px;
-        }
-
-        .info-text {
-            flex: 1;
-            text-align: left;
-        }
-
-        .info-img {
-            flex: 1;
-            text-align: center;
-        }
+    @keyframes moveBg {
+        0% { background-position: center top; }
+        50% { background-position: center bottom; }
+        100% { background-position: center top; }
     }
 
-    .contacto-section {
-        padding: 40px 20px;
-        background-color: rgba(0, 0, 0, 0.1);
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        animation: fadePop 1.5s ease-out both;
+    }
+
+    @keyframes fadePop {
+        0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .hero-logo {
+        width: 100px;
+        margin-bottom: 20px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 900;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        margin-bottom: 15px;
+        color: #341f97;
+    }
+
+    .hero-subtitle {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #5f27cd;
+        margin-bottom: 20px;
+    }
+
+    .hero-text {
+        font-size: 1.2rem;
+        max-width: 650px;
+        margin: 0 auto;
+        color: #444;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    /* === ELEMENTOS FLOTANTES === */
+    .float-icon {
+        position: absolute;
+        width: 60px;
+        animation: floatAlt 4s ease-in-out infinite;
+        z-index: 1;
+        opacity: 0.8;
+    }
+
+    .float-icon:nth-child(1) {
+        top: 15%; left: 10%;
+        animation-delay: 0s;
+    }
+    .float-icon:nth-child(2) {
+        top: 30%; right: 12%;
+        animation-delay: 1.5s;
+    }
+    .float-icon:nth-child(3) {
+        bottom: 20%; left: 8%;
+        animation-delay: 3s;
+    }
+    .float-icon:nth-child(4) {
+        bottom: 18%; right: 15%;
+        animation-delay: 2s;
+    }
+
+    @keyframes floatAlt {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+    }
+
+    /* === SECCIÓN DESTACADA ANIMADA === */
+    .beneficios-section {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        padding: 80px 20px;
+        color: white;
+    }
+
+    .beneficios-container {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 50px;
+        justify-content: center;
+    }
+
+    .beneficios-texto {
+        flex: 1;
+        min-width: 280px;
+        text-align: left;
+    }
+
+    .beneficios-texto h2 {
+        font-size: 2.3rem;
+        margin-bottom: 30px;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .destacado {
+        background: -webkit-linear-gradient(#00fdd8, #80ffea);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .beneficios-texto ul {
+        list-style: none;
+        padding: 0;
+        font-size: 1.15rem;
+        line-height: 2;
+    }
+
+    .beneficios-texto li {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    .beneficios-texto li span {
+        font-size: 1.5rem;
+        margin-right: 12px;
+        animation: float 2.5s ease-in-out infinite;
+    }
+
+    .beneficios-imagen {
+        flex: 1;
+        min-width: 280px;
         text-align: center;
     }
 
-    .contacto-section a {
-        color: #ffffff;
-        text-decoration: underline;
+    .beneficios-imagen img {
+        max-width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        animation: glowImage 6s ease-in-out infinite;
     }
 
-    .contacto-section a:hover {
-        color: #dddddd;
+    @keyframes glowImage {
+        0%, 100% { box-shadow: 0 0 25px #a29bfe; }
+        50% { box-shadow: 0 0 50px #6c63ff; }
+    }
+
+    /* === SECCIÓN INFORMATIVA === */
+    .info-section {
+        background-color: #ffffff;
+        color: #333;
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .info-grid {
+        display: grid;
+        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .info-card {
+        background-color: #f6f6ff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        transition: transform 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .info-card h3 {
+        margin-bottom: 10px;
+        color: #6c63ff;
+    }
+
+    .info-card p {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .footer {
+        background-color: #6c63ff;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2.5rem; }
+        .hero-subtitle { font-size: 1.2rem; }
+        .hero-text { font-size: 1rem; }
+        .beneficios-container { flex-direction: column; }
+        .beneficios-texto, .beneficios-imagen { text-align: center; }
     }
 </style>
 
-<section class="inicio-section">
-    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo MiTiendita" class="logo">
-    <h1>Bienvenido a MiTiendita</h1>
-    <p>Tu herramienta inteligente para conocer, gestionar y analizar tu tienda.</p>
+<!-- HERO DIVERTIDO -->
+<section class="hero-divertido">
+    <!-- Elementos flotantes decorativos -->
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="float-icon" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="float-icon" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="float-icon" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="float-icon" alt="decor4">
+
+    <div class="hero-content">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo MiTiendita" class="hero-logo">
+        <h1 class="hero-title">Bienvenido a MiTiendita</h1>
+        <h2 class="hero-subtitle">¡Gestiona, analiza y brilla con tu negocio!</h2>
+        <p class="hero-text">
+            Administra productos, registra tus gastos, visualiza tus ganancias con gráficas ilustrativas y dale vida a tu tienda con la mejor app del universo...
+        </p>
+    </div>
 </section>
 
-<section class="info-section">
-    <div class="container">
-        <h2 class="text-center">📊 Gráficas que tenemos</h2>
-        <div class="info-row">
-            <div class="info-img">
-                <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Gráfica ejemplo" class="img-grafico">
-            </div>
-            <div class="info-text">
-                <p>
-                    Manejamos todas estas gráficas: <strong>porcentaje de ganancia por producto</strong>,
-                    <strong>resumen financiero</strong>,
-                    <strong>top 5 productos por inventario</strong> y
-                    <strong>ganancia promedio por categoría</strong>. <br><br>
-                    Visualízalo todo de forma clara para tomar mejores decisiones en tu negocio.
-                </p>
-            </div>
+<!-- SECCIÓN DESTACADA -->
+<section class="beneficios-section">
+    <div class="beneficios-container">
+        <div class="beneficios-texto">
+            <h2><span class="destacado">Impulsa tu negocio</span> con nuestra plataforma</h2>
+            <ul>
+                <li><span>📈</span> Reportes inteligentes por categoría y producto</li>
+                <li><span>💰</span> Control preciso de ingresos y gastos</li>
+                <li><span>⚙️</span> Automatiza tus decisiones comerciales</li>
+                <li><span>🧾</span> Organiza tu inventario en segundos</li>
+                <li><span>📊</span> Visualizaciones que te ayudan a crecer</li>
+                <li><span>📱</span> Accesible desde cualquier dispositivo</li>
+            </ul>
+        </div>
+        <div class="beneficios-imagen">
+            <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Visualización de sistema">
         </div>
     </div>
 </section>
 
-<section class="contacto-section">
-    <h3>📞 Contáctanos</h3>
-    <p><strong>📱 Teléfono:</strong> +57 311 456 7890</p>
-    <p><strong>📸 Instagram:</strong> <a href="https://instagram.com/tunombre" target="_blank">@tunombre</a></p>
-    <p><strong>👤 Desarrollado por:</strong> Juan Pérez</p>
+<!-- SECCIÓN INFORMATIVA -->
+<section class="info-section">
+    <h2>Lo que puedes hacer</h2>
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>📦 Control de Inventario</h3>
+            <p>Agrega, edita y elimina productos con stock, precios de compra y venta.</p>
+        </div>
+        <div class="info-card">
+            <h3>💸 Registro de Gastos</h3>
+            <p>Administra tus egresos de forma clara, visualiza totales y mejora tu rentabilidad.</p>
+        </div>
+        <div class="info-card">
+            <h3>📊 Análisis con Gráficas</h3>
+            <p>Visualiza la rentabilidad por producto, categoría y el top de inversiones en stock...</p>
+        </div>
+    </div>
 </section>
+
+<!-- PIE DE PÁGINA -->
+<footer class="footer">
+    Desarrollado con 💜 por Maria Jose Ramirez &nbsp; | &nbsp; @amari_19.07
+</footer>
+
 {% endblock %}

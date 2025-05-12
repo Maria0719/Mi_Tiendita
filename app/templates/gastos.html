@@ -1,38 +1,151 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mb-4 text-center">Gastos Registrados</h1>
-<a href="{{ url_for('agregar_gasto') }}" class="btn btn-primary mb-3">Agregar Gasto</a>
+<style>
+    .gastos-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="d-flex justify-content-center">
-    <table class="table table-hover table-bordered shadow-sm rounded w-auto">
-        <thead class="table-danger text-center">
-            <tr>
-                <th>Descripción</th>
-                <th>Valor</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody class="align-middle text-center">
-            {% for gasto in gastos %}
-            <tr>
-                <td>{{ gasto.descripcion }}</td>
-                <td class="price-column">{{ gasto.valor | money }}</td>
-                <td>
-                    <a href="{{ url_for('editar_gasto', id=gasto.id) }}" class="btn btn-sm btn-outline-primary mb-1">Editar</a>
-                    <form action="{{ url_for('eliminar_gasto', id=gasto.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este gasto?');">
-                        <button class="btn btn-sm btn-outline-danger">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    .gastos-hero::before {
+        content: "";
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: moveBg 60s linear infinite;
+        z-index: 0;
+    }
 
-<div class="alert alert-info mt-4 w-50 mx-auto text-center">
-    <strong>Total de Gastos:</strong> {{ total | money }}
-</div>
+    @keyframes moveBg {
+        0%, 100% { background-position: top center; }
+        50% { background-position: bottom center; }
+    }
 
+    .gastos-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
 
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 15%; left: 12%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { top: 25%; right: 14%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { bottom: 20%; left: 10%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 18%; right: 12%; animation-delay: 3s; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .gastos-tabla {
+        padding: 60px 20px;
+        background-color: #fdfdff;
+    }
+
+    .gastos-tabla .table {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .gastos-tabla thead {
+        background-color: #ff6b81;
+        color: white;
+        font-size: 1.05rem;
+    }
+
+    .gastos-tabla td, .gastos-tabla th {
+        padding: 16px;
+        vertical-align: middle;
+    }
+
+    .gastos-tabla tbody tr:hover {
+        background-color: #fff0f5;
+    }
+
+    .price-column {
+        font-weight: bold;
+        color: #c0392b;
+    }
+
+    .alert {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .btn-add {
+        font-weight: 600;
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .gastos-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- HERO ENCABEZADO -->
+<section class="gastos-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
+
+    <h1>💸 Gastos Registrados</h1>
+</section>
+
+<!-- TABLA DE GASTOS -->
+<section class="gastos-tabla">
+
+    <div class="d-flex justify-content-center">
+        <table class="table table-hover table-bordered text-center w-auto">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                {% for gasto in gastos %}
+                <tr>
+                    <td>{{ gasto.descripcion }}</td>
+                    <td class="price-column">{{ gasto.valor | money }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_gasto', id=gasto.id) }}" class="btn btn-sm btn-outline-primary mb-1">Editar</a>
+                        <form action="{{ url_for('eliminar_gasto', id=gasto.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este gasto?');">
+                            <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-info mt-4 w-50 mx-auto text-center">
+        <strong>Total de Gastos:</strong> {{ total | money }}
+    </div>
+</section>
 {% endblock %}

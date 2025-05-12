@@ -1,24 +1,129 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mb-4 text-center">Lista de Productos</h1>
-<a href="{{ url_for('agregar') }}" class="btn btn-success mb-3">Agregar Producto</a>
+<style>
+    .productos-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="d-flex justify-content-center">
-    <table class="table table-hover table-bordered shadow-sm rounded w-auto">
-        <thead class="table-primary text-center">
+    .productos-hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
+    }
+
+    .productos-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        z-index: 2;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+    }
+
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 20%; left: 12%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { bottom: 25%; left: 15%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { top: 30%; right: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+    @keyframes moveBg {
+        0%, 100% { background-position: center top; }
+        50% { background-position: center bottom; }
+    }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .productos-tabla {
+        background: #ffffff;
+        padding: 60px 20px;
+    }
+
+    .productos-tabla table {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        min-width: 90%;
+    }
+
+    .productos-tabla thead {
+        background-color: #6c63ff;
+        color: white;
+    }
+
+    .productos-tabla tbody tr:hover {
+        background-color: #f5f3ff;
+    }
+
+    .productos-tabla td,
+    .productos-tabla th {
+        padding: 16px;
+        vertical-align: middle;
+    }
+
+    .price-column {
+        font-weight: bold;
+        color: #341f97;
+    }
+
+    @media (max-width: 768px) {
+        .productos-hero h1 {
+            font-size: 2rem;
+        }
+
+        .productos-tabla table {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<!-- HERO VISUAL -->
+<section class="productos-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
+
+    <h1>📦 Lista de Productos</h1>
+</section>
+
+<!-- TABLA DE PRODUCTOS -->
+<section class="productos-tabla d-flex justify-content-center">
+    <table class="table table-hover table-bordered text-center">
+        <thead>
             <tr>
                 <th>Producto</th>
                 <th>Precio de Compra</th>
                 <th>Precio de Venta</th>
                 <th>Ganancia (%)</th>
-                <th class="text-center">Ganancia Total</th>
+                <th>Ganancia Total</th>
                 <th>Stock</th>
                 <th>Categoría</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody class="align-middle text-center">
+        <tbody>
             {% for producto in productos %}
             {% set ganancia_percent = ((producto.precio_venta - producto.precio_compra) / producto.precio_compra * 100) %}
             {% set ganancia_total = (producto.precio_venta - producto.precio_compra) * producto.stock %}
@@ -40,6 +145,6 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
+</section>
 
 {% endblock %}

@@ -1,42 +1,152 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="text-center mb-4">Resumen General</h2>
+<style>
+    /* === SECCIÓN RESUMEN LLAMATIVA === */
+    .resumen-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 50px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="d-flex justify-content-center">
-    <table class="table table-hover table-bordered shadow-sm rounded w-auto">
-        <thead class="table-info text-center">
-            <tr>
-                <th>Tipo</th>
-                <th>Nombre / Descripción</th>
-                <th>Precio Compra</th>
-                <th>Precio Venta / Valor</th>
-                <th>Stock</th>
-                <th>Categoría</th>
-            </tr>
-        </thead>
-        <tbody class="align-middle text-center">
-            {% for p in productos %}
-            <tr>
-                <td><span class="badge bg-primary">Producto</span></td>
-                <td>{{ p.nombre }}</td>
-                <td>{{ p.precio_compra | money }}</td>
-                <td>{{ p.precio_venta | money }}</td>
-                <td>{{ p.stock }}</td>
-                <td>{{ p.categoria }}</td>
-            </tr>
-            {% endfor %}
-            {% for g in gastos %}
-            <tr>
-                <td><span class="badge bg-danger">Gasto</span></td>
-                <td>{{ g.descripcion }}</td>
-                <td>-</td>
-                <td>{{ g.valor | money }}</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    .resumen-hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.1;
+        animation: moveBg 60s linear infinite;
+        z-index: 0;
+    }
+
+    @keyframes moveBg {
+        0% { background-position: top center; }
+        50% { background-position: bottom center; }
+        100% { background-position: top center; }
+    }
+
+    .resumen-hero h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        z-index: 2;
+        position: relative;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+    }
+
+    .float-resumen {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: floatAlt 4s ease-in-out infinite;
+        opacity: 0.8;
+    }
+
+    .float-resumen:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .float-resumen:nth-child(2) { top: 40%; right: 12%; animation-delay: 1.5s; }
+    .float-resumen:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 3s; }
+    .float-resumen:nth-child(4) { bottom: 12%; right: 15%; animation-delay: 2s; }
+
+    @keyframes floatAlt {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+    }
+
+    /* === TABLA ESTILO BONITO === */
+    .resumen-tabla-container {
+        padding: 60px 20px;
+        display: flex;
+        justify-content: center;
+        background-color: #fafaff;
+    }
+
+    .resumen-tabla table {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        min-width: 80%;
+    }
+
+    .resumen-tabla thead {
+        background-color: #6c63ff;
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    .resumen-tabla td, .resumen-tabla th {
+        padding: 16px;
+        vertical-align: middle;
+    }
+
+    .resumen-tabla .badge {
+        font-size: 1rem;
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .resumen-hero h2 {
+            font-size: 2rem;
+        }
+
+        .resumen-tabla table {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<!-- Encabezado colorido -->
+<section class="resumen-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="float-resumen" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="float-resumen" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="float-resumen" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="float-resumen" alt="decor4">
+
+    <h2>📊 Resumen General de tu Tienda</h2>
+</section>
+
+<!-- Tabla visualmente mejorada -->
+<section class="resumen-tabla-container">
+    <div class="resumen-tabla">
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre / Descripción</th>
+                    <th>Precio Compra</th>
+                    <th>Precio Venta / Valor</th>
+                    <th>Stock</th>
+                    <th>Categoría</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr>
+                    <td><span class="badge bg-primary">Producto</span></td>
+                    <td>{{ p.nombre }}</td>
+                    <td>{{ p.precio_compra | money }}</td>
+                    <td>{{ p.precio_venta | money }}</td>
+                    <td>{{ p.stock }}</td>
+                    <td>{{ p.categoria }}</td>
+                </tr>
+                {% endfor %}
+                {% for g in gastos %}
+                <tr>
+                    <td><span class="badge bg-danger">Gasto</span></td>
+                    <td>{{ g.descripcion }}</td>
+                    <td>-</td>
+                    <td>{{ g.valor | money }}</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endblock %}

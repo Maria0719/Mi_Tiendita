@@ -1,41 +1,121 @@
 {% extends 'base.html' %}
-<!-- Hereda la estructura base de la aplicación desde base.html (barra lateral, estilos, etc.) -->
 
 {% block content %}
-<!-- Inicia el bloque de contenido específico para esta página -->
+<style>
+    .gasto-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<h1 class="mb-4 text-center">Editar Gasto</h1>
-<!-- Título centrado con margen inferior que indica la función de esta vista -->
+    .gasto-hero::before {
+        content: "";
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: moveBg 60s linear infinite;
+        z-index: 0;
+    }
 
-<form action="{{ url_for('editar_gasto', id=gasto.id) }}" method="POST" class="row g-3 mb-5">
-    <!-- Formulario que se envía mediante método POST a la ruta 'editar_gasto', pasando el id del gasto -->
-    <!-- Usa Bootstrap para distribuir los campos en una fila con espaciado entre columnas (g-3) y margen inferior (mb-5) -->
+    .gasto-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
 
-    <div class="col-md-8">
-        <!-- Columna de 8/12 partes del ancho -->
-        <label for="descripcion" class="form-label">Descripción del Gasto</label>
-        <!-- Etiqueta del campo de descripción -->
-        <input type="text" id="descripcion" class="form-control" name="descripcion" value="{{ gasto.descripcion }}" required>
-        <!-- Campo de texto con el valor actual del gasto precargado. Es obligatorio. -->
-    </div>
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
 
-    <div class="col-md-4">
-        <!-- Columna de 4/12 partes del ancho -->
-        <label for="valor" class="form-label">Valor ($)</label>
-        <!-- Etiqueta para el campo de valor -->
-        <input type="number" id="valor" class="form-control" name="valor" value="{{ gasto.valor }}" required>
-        <!-- Campo numérico con el valor actual precargado. También es obligatorio. -->
-    </div>
+    .icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { top: 30%; right: 12%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 18%; right: 14%; animation-delay: 3s; }
 
-    <div class="col-md-12">
-        <!-- Columna de ancho completo (12 columnas) -->
-        <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
-        <!-- Botón verde que ocupa todo el ancho del contenedor para guardar los cambios del gasto -->
-    </div>
-</form>
+    @keyframes moveBg {
+        0%, 100% { background-position: center top; }
+        50% { background-position: center bottom; }
+    }
 
-<a href="{{ url_for('gastos') }}" class="btn btn-secondary">Volver al listado de gastos</a>
-<!-- Enlace que regresa al listado general de gastos, con estilo de botón gris -->
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
 
+    .formulario-gasto {
+        padding: 60px 20px;
+        background-color: #fdfdff;
+    }
+
+    .formulario-gasto form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .formulario-gasto .btn-success {
+        border-radius: 30px;
+        font-weight: bold;
+    }
+
+    .formulario-gasto .btn-secondary {
+        display: block;
+        margin: 30px auto 0;
+        border-radius: 30px;
+        font-weight: 500;
+        width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+        .gasto-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- HERO DECORATIVO -->
+<section class="gasto-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
+    <h1>🧾 Editar Gasto</h1>
+</section>
+
+<!-- FORMULARIO -->
+<section class="formulario-gasto">
+    <form action="{{ url_for('editar_gasto', id=gasto.id) }}" method="POST" class="row g-3 mb-4">
+        <div class="col-md-8">
+            <label for="descripcion" class="form-label">Descripción del Gasto</label>
+            <input type="text" id="descripcion" class="form-control" name="descripcion" value="{{ gasto.descripcion }}" required>
+        </div>
+
+        <div class="col-md-4">
+            <label for="valor" class="form-label">Valor ($)</label>
+            <input type="number" id="valor" class="form-control" name="valor" value="{{ gasto.valor }}" required>
+        </div>
+
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+        </div>
+    </form>
+
+    <a href="{{ url_for('gastos') }}" class="btn btn-secondary">⬅ Volver al listado de gastos</a>
+</section>
 {% endblock %}
-<!-- Fin del bloque de contenido -->

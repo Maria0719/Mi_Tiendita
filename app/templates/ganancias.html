@@ -1,64 +1,129 @@
 {% extends 'base.html' %}
-<!-- Hereda la estructura principal que incluye la barra lateral y estilos base -->
 
 {% block content %}
-<!-- Inicia el bloque de contenido principal -->
+<style>
+    .ganancias-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="container my-5">
-    <!-- Contenedor con márgenes verticales para separación -->
+    .ganancias-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
+    }
 
-    <h2 class="text-center mb-4">📊 Resumen de Inventario</h2>
-    <!-- Título centrado con un ícono decorativo -->
+    @keyframes moveBg {
+        0%, 100% { background-position: top center; }
+        50% { background-position: bottom center; }
+    }
 
-    <div class="p-4 bg-light rounded shadow-sm">
-        <!-- Caja con fondo claro, bordes redondeados y sombra -->
+    .ganancias-hero h2 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
 
-        <p><strong>Total de Valor de Compra:</strong> 
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { top: 25%; right: 12%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 15%; right: 14%; animation-delay: 3s; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .ganancias-content {
+        padding: 60px 20px;
+        background-color: #f9f9ff;
+    }
+
+    .ganancias-box {
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .ganancias-box p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .ganancias-box small {
+        color: #6c757d;
+    }
+
+    hr {
+        border-top: 2px solid #a29bfe;
+        margin: 30px 0;
+    }
+
+    @media (max-width: 768px) {
+        .ganancias-hero h2 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- HERO VISUAL -->
+<section class="ganancias-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
+    <h2>📊 Resumen de Inventario</h2>
+</section>
+
+<!-- CONTENIDO -->
+<section class="ganancias-content">
+    <div class="ganancias-box">
+        <p><strong>Total de Valor de Compra:</strong>
             {{ "{:,.0f}".format(valor_compra_total or 0) }}<br>
-            <!-- Muestra el valor total invertido en compras, usando formato de número -->
-
-            <small class="text-muted">
-                💰 Es la suma del precio de compra de todos los productos multiplicado por su stock.
-            </small>
-            <!-- Descripción explicativa del dato -->
+            <small>💰 Suma del precio de compra de todos los productos multiplicado por su stock.</small>
         </p>
 
-        <p><strong>Total de Valor de Venta:</strong> 
+        <p><strong>Total de Valor de Venta:</strong>
             {{ "{:,.0f}".format(valor_venta_total or 0) }}<br>
-            <!-- Muestra el total potencial de ingresos si se vende todo -->
-
-            <small class="text-muted">
-                📦 Representa cuánto dinero ingresarías si vendieras todo el inventario al precio actual de venta.
-            </small>
+            <small>📦 Dinero potencial si vendes todo el inventario.</small>
         </p>
 
-        <p><strong>Total de Gastos:</strong> 
+        <p><strong>Total de Gastos:</strong>
             {{ "{:,.0f}".format(total_gastos or 0) }}<br>
-            <!-- Muestra la suma total de los gastos registrados -->
-
-            <small class="text-muted">
-                🧾 Suma total de los gastos registrados, como servicios, compras operativas, etc.
-            </small>
+            <small>🧾 Suma de egresos registrados (servicios, compras operativas, etc.).</small>
         </p>
 
         <hr>
-        <!-- Línea separadora para destacar la ganancia -->
 
-        <p><strong>Total de Ganancias (netas):</strong> 
+        <p><strong>Total de Ganancias (netas):</strong>
             {{ "{:,.0f}".format(ganancias_total or 0) }}<br>
-            <!-- Muestra el resultado de venta - compra - gastos -->
-
-            <small class="text-muted">
-                📈 Esta es tu utilidad estimada si vendes todo el inventario y descuentas los gastos.
-            </small>
+            <small>📈 Utilidad final = valor de venta - compras - gastos.</small>
         </p>
     </div>
-
-    <div class="text-center mt-4">
-        <!-- Botón centrado al final para volver -->
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">⬅ Volver al inicio</a>
-    </div>
-</div>
+</section>
 
 {% endblock %}
-<!-- Fin del bloque de contenido -->

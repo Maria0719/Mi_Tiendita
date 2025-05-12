@@ -1,131 +1,182 @@
 {% extends 'base.html' %}
-<!-- Hereda la estructura base, incluyendo la barra lateral y estilos globales -->
 
 {% block content %}
-<!-- Inicia el bloque de contenido que se insertará en la plantilla base -->
+<style>
+    .graficas-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
 
-<div class="container mt-4">
-    <!-- Contenedor principal con margen superior -->
+    .graficas-hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
+    }
 
-    <h1 class="text-center mb-4">📊 Gráficas Financieras</h1>
-    <!-- Título centrado con ícono de gráfico -->
+    @keyframes moveBg {
+        0%, 100% { background-position: center top; }
+        50% { background-position: center bottom; }
+    }
 
-    <!-- ==== GRÁFICA 1 ==== -->
-    <div class="card mb-5 shadow-sm">
-        <!-- Tarjeta con sombra y margen inferior -->
+    .graficas-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        z-index: 2;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+    }
 
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 18%; left: 12%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { bottom: 25%; left: 15%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .graficas-container {
+        padding: 60px 20px;
+        background-color: #f9f9ff;
+    }
+
+    .graficas-container .card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+    }
+
+    .graficas-container .card-title {
+        font-weight: 700;
+        color: #6c63ff;
+    }
+
+    .graficas-container .card-body {
+        padding: 30px;
+        background-color: white;
+    }
+
+    .graficas-container .text-muted {
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+        .graficas-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<!-- HERO CON ESTILO -->
+<section class="graficas-hero">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
+    <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
+    <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
+    <h1>📊 Gráficas Financieras</h1>
+</section>
+
+<!-- CONTENEDOR DE GRÁFICAS -->
+<section class="graficas-container">
+
+    <!-- Gráfica 1 -->
+    <div class="card">
         <div class="card-body">
-            <!-- Contenido interno de la tarjeta -->
-
             <h4 class="card-title text-center">Porcentaje de Ganancia por Producto</h4>
-            <!-- Subtítulo centrado -->
-
             <div style="overflow-x:auto">
-                <!-- Permite hacer scroll horizontal si la imagen es muy ancha -->
-
                 {% if grafica1 %}
-                <!-- Si existe la imagen base64 en la variable grafica1 -->
-
-                <img src="data:image/png;base64,{{ grafica1 }}" class="img-fluid mt-3" 
-                    alt="Gráfica de ganancia por porcentaje" style="max-height: 500px;">
-                <!-- Muestra la imagen generada desde Flask codificada en base64 -->
-                <p class="text-muted text-center mt-2">
+                <img src="data:image/png;base64,{{ grafica1 }}" class="img-fluid mt-3" alt="Gráfica de ganancia por porcentaje" style="max-height: 500px;">
+                <p class="text-muted text-center mt-3">
                     📊 <strong>¿Qué muestra?</strong><br>
-                        Esta gráfica representa el <strong>porcentaje de ganancia individual</strong> aplicado a cada producto. Es decir, cuánto más estás cobrando sobre el precio de compra.
+                    Esta gráfica representa el <strong>porcentaje de ganancia individual</strong> aplicado a cada producto.
+                    <br><br>
+                    ✅ ((Precio de Venta - Precio de Compra) ÷ Precio de Compra) × 100<br>
+                    ✅ Te ayuda a comparar el margen de utilidad entre productos.
                 </p>
-                <p class="text-muted text-center">
-                ✅ <strong>¿Cómo se calcula?</strong> 
-                ((Precio de Venta - Precio de Compra) ÷ Precio de Compra) × 100<br>
-                ✅ <strong>¿Para qué sirve?</strong> 
-                Te ayuda a comparar el margen de utilidad entre productos y detectar inconsistencias.
-                </p>
- 
                 {% else %}
                 <p class="text-center text-muted mt-3">⚠ No hay datos disponibles para esta gráfica.</p>
-                <!-- Mensaje en caso de que no se haya generado la gráfica -->
                 {% endif %}
             </div>
-
-            <p class="text-muted text-center mt-2">
-                Representa el porcentaje de ganancia aplicado a cada producto.
-            </p>
         </div>
     </div>
 
-    <!-- ==== GRÁFICA 2 ==== -->
-    <div class="card mb-4 shadow-sm">
+    <!-- Gráfica 2 -->
+    <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Resumen Financiero</h4>
             {% if grafica2 %}
             <img src="data:image/png;base64,{{ grafica2 }}" class="img-fluid mt-3" alt="Gráfica de resumen financiero">
-            <p class="text-muted text-center mt-2">
-    📊 <strong>¿Qué muestra?</strong><br>
-    Compara visualmente la <strong>ganancia bruta, los gastos registrados y la ganancia neta final</strong>.
-</p>
-<p class="text-muted text-center">
-    ✅ <strong>Ganancia bruta:</strong> ingresos esperados si vendes todo el inventario.<br>
-    ✅ <strong>Gastos:</strong> suma total de egresos operativos.<br>
-    ✅ <strong>Ganancia neta:</strong> utilidad final después de restar los gastos.<br>
-    Ideal para tener una visión rápida del estado económico general.
-</p>
+            <p class="text-muted text-center mt-3">
+                📊 <strong>¿Qué muestra?</strong><br>
+                Compara la <strong>ganancia bruta</strong>, <strong>los gastos</strong> y <strong>la ganancia neta</strong>.
+                <br><br>
+                ✅ Ganancia bruta = Ingresos esperados<br>
+                ✅ Gastos = Egresos registrados<br>
+                ✅ Ganancia neta = Bruta - Gastos
+            </p>
             {% else %}
             <p class="text-center text-muted mt-3">⚠ No hay datos disponibles para esta gráfica.</p>
             {% endif %}
-            <p class="text-muted text-center mt-2">
-                Ganancia bruta = Ingresos - Costos | Ganancia neta = Ganancia bruta - Gastos
-            </p>
         </div>
     </div>
 
-    <!-- ==== GRÁFICA 3 ==== -->
-    <div class="card mb-4 shadow-sm">
+    <!-- Gráfica 3 -->
+    <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Top 5 Productos por Valor de Inventario</h4>
             {% if grafica3 %}
             <img src="data:image/png;base64,{{ grafica3 }}" class="img-fluid mt-3" alt="Top Inventario">
-            <p class="text-muted text-center mt-2">
-    📊 <strong>¿Qué muestra?</strong><br>
-    Muestra los 5 productos en los que tienes mayor <strong>dinero invertido en stock</strong>, calculado por el precio de compra multiplicado por la cantidad.
-</p>
-<p class="text-muted text-center">
-    ✅ <strong>¿Cómo se calcula?</strong> Precio de Compra × Stock<br>
-    ✅ <strong>¿Para qué sirve?</strong> 
-    Identifica en qué productos estás comprometiendo más capital y si eso se alinea con tus ventas.
-</p>
-
+            <p class="text-muted text-center mt-3">
+                📊 <strong>¿Qué muestra?</strong><br>
+                Los productos con más inversión en stock.
+                <br><br>
+                ✅ Precio Compra × Stock<br>
+                ✅ En qué productos inviertes más capital
+            </p>
             {% else %}
             <p class="text-center text-muted mt-3">⚠ No hay datos disponibles para esta gráfica.</p>
             {% endif %}
         </div>
     </div>
 
-    <!-- ==== GRÁFICA 4 ==== -->
-    <div class="card mb-4 shadow-sm">
+    <!-- Gráfica 4 -->
+    <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Ganancia Promedio por Categoría</h4>
             {% if grafica4 %}
             <img src="data:image/png;base64,{{ grafica4 }}" class="img-fluid mt-3" alt="Ganancia por Categoría">
-            <p class="text-muted text-center mt-2">
-    📊 <strong>¿Qué muestra?</strong><br>
-    Esta gráfica calcula el <strong>porcentaje promedio de ganancia</strong> agrupado por categoría de producto.
-</p>
-<p class="text-muted text-center">
-    ✅ <strong>¿Cómo se calcula?</strong> Promedio de ((Venta - Compra) ÷ Compra × 100) por categoría<br>
-    ✅ <strong>¿Para qué sirve?</strong> 
-    Identifica qué tipo de productos son más rentables y enfoca tu estrategia en ellos.
-</p>
-
+            <p class="text-muted text-center mt-3">
+                📊 <strong>¿Qué muestra?</strong><br>
+                Promedio de ganancia por categoría de producto.
+                <br><br>
+                ✅ ((Venta - Compra) ÷ Compra × 100)<br>
+                ✅ Te ayuda a saber qué categoría es más rentable
+            </p>
             {% else %}
             <p class="text-center text-muted mt-3">⚠ No hay datos disponibles para esta gráfica.</p>
             {% endif %}
         </div>
     </div>
-
-    <!-- BOTÓN DE VOLVER -->
-    <div class="text-center mt-5">
-        <a href="{{ url_for('index') }}" class="btn btn-primary">⬅ Volver al inicio</a>
-    </div>
-</div>
+</section>
 
 {% endblock %}
-<!-- Cierra el bloque de contenido -->
