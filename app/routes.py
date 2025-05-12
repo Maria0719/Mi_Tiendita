@@ -14,7 +14,9 @@ import os
 # Página de bienvenida
 @app.route('/')
 def inicio():
-    return render_template('inicio.html')
+    grafica_demo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABGoAAALv..."  # pega aquí el base64 completo que generé
+    return render_template('inicio.html', grafica_demo=grafica_demo)
+
 
 # Página principal de productos
 @app.route('/index')

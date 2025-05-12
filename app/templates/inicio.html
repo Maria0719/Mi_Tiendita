@@ -2,42 +2,20 @@
 
 {% block content %}
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        width: 100%;
-    }
-
-    .main-content {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100vw;
-    }
-
-    .inicio-section,
-    .cta-section {
-        margin: 0;
-        padding: 80px 0;
-        width: 100vw;
-        overflow: hidden;
-    }
-
-    .inicio-section {
+    body {
         background: linear-gradient(to bottom, #6c63ff, #a29bfe);
         color: #ffffff;
-        text-align: center;
+    }
+
+    .inicio-section, .info-section, .contacto-section {
+        background: transparent;
+        color: #ffffff;
+        padding: 60px 20px;
     }
 
     .logo {
         max-width: 180px;
         margin-bottom: 30px;
-    }
-
-    .inicio-section h1 {
-        font-size: 2.8rem;
-        font-weight: 600;
-        margin-bottom: 20px;
     }
 
     .description {
@@ -46,61 +24,47 @@
         margin-bottom: 15px;
     }
 
-    .cta-section {
-        background: linear-gradient(to bottom, #a29bfe, #f7f7fb);
-        text-align: center;
+    .info-section img {
+        max-width: 400px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    .cta-title {
-        font-size: 2.2rem;
-        font-weight: 600;
-        color: #222;
-        margin-bottom: 15px;
+    .contacto-section a {
+        color: #ffffff;
+        text-decoration: underline;
     }
 
-    .cta-subtitle {
-        font-size: 1rem;
-        color: #888;
-        margin-bottom: 30px;
+    .contacto-section a:hover {
+        color: #dddddd;
     }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .fade-in-up {
-        animation: fadeInUp 1s ease-in-out forwards;
-        opacity: 0;
-    }
-
-    .delay-1 { animation-delay: 0.3s; }
-    .delay-2 { animation-delay: 0.6s; }
-    .delay-3 { animation-delay: 0.9s; }
 </style>
 
-<section class="inicio-section">
-    <div class="w-100 text-center m-0 p-0">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo MiTiendita" class="logo fade-in-up delay-1">
-        <h1 class="fade-in-up delay-1">Bienvenido a MiTiendita</h1>
-        <p class="description fade-in-up delay-2">
-            MiTiendita es una app diseñada para ayudarte a hacer predicciones sobre la rentabilidad de tu tienda.
-            Podrás agregar productos, gastos y calcular si obtendrás ganancias o pérdidas.
-        </p>
-        <p class="description fade-in-up delay-3">
-            Visualiza gráficas de ganancias brutas, netas y tus gastos totales.
-        </p>
-    </div>
+<section class="inicio-section text-center">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo MiTiendita" class="logo">
+    <h1>Bienvenido a MiTiendita</h1>
+    <p class="description">
+        MiTiendita es una app diseñada para ayudarte a hacer predicciones sobre la rentabilidad de tu tienda.
+        Podrás agregar productos, gastos y calcular si obtendrás ganancias o pérdidas.
+    </p>
+    <p class="description">
+        Visualiza gráficas de ganancias brutas, netas y tus gastos totales.
+    </p>
 </section>
 
-<section class="cta-section text-center">
-    <h2 class="cta-title fade-in-up delay-2">¡Prueba Nuestra Versión!</h2>
-    <p class="cta-subtitle fade-in-up delay-3">No te arrepentirás</p>
+<section class="info-section text-center">
+    <h3 class="mb-3">📊 Gráficas que tenemos</h3>
+    <p>Manejamos todas estas gráficas: porcentaje de ganancia por producto, resumen financiero, top 5 productos por inventario y ganancia promedio por categoría.</p>
+    <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Gráfica decorativa">
+</section>
+
+<section class="contacto-section text-center">
+    <h3 class="mb-3">📞 Contáctanos</h3>
+    <p><strong>📱 Teléfono:</strong> +57 311 456 7890</p>
+    <p>
+        <strong>📸 Instagram:</strong>
+        <a href="https://instagram.com/tunombre" target="_blank">@tunombre</a>
+    </p>
+    <p><strong>👤 Desarrollado por:</strong> Juan Pérez</p>
 </section>
 {% endblock %}
