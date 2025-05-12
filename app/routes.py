@@ -185,7 +185,7 @@ def graficas():
     ax4.set_xlabel("Categoría")
     ax4.tick_params(axis='x', rotation=30)
     for i, row in promedio_categoria.iterrows():
-        ax4.text(i, row["ganancia_porcentaje"] + 2, f"{row["ganancia_porcentaje"]:.1f}%", ha='center')
+        ax4.text(i, row["ganancia_porcentaje"] + 2, f"{row['ganancia_porcentaje']:.1f}%", ha='center')
     buf4 = io.BytesIO()
     fig4.savefig(buf4, format='png')
     buf4.seek(0)

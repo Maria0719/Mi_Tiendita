@@ -3,14 +3,15 @@
 {% block content %}
 <style>
     body {
+        margin: 0;
+        font-family: Arial, sans-serif;
         background: linear-gradient(to bottom, #6c63ff, #a29bfe);
         color: #ffffff;
     }
 
-    .inicio-section, .info-section, .contacto-section {
-        background: transparent;
-        color: #ffffff;
-        padding: 60px 20px;
+    .inicio-section {
+        padding: 80px 20px;
+        text-align: center;
     }
 
     .logo {
@@ -18,16 +19,53 @@
         margin-bottom: 30px;
     }
 
-    .description {
-        font-size: 1.1rem;
-        color: #e8e6ff;
-        margin-bottom: 15px;
+    .info-section {
+        padding: 60px 20px;
     }
 
-    .info-section img {
-        max-width: 400px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    .info-section h2 {
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        color: #fff;
+    }
+
+    .info-text p {
+        font-size: 1.1rem;
+        color: #f0f0f0;
+        margin-bottom: 0;
+    }
+
+    .img-grafico {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    @media (min-width: 768px) {
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .info-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .info-img {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    .contacto-section {
+        padding: 40px 20px;
+        background-color: rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
 
     .contacto-section a {
@@ -40,31 +78,36 @@
     }
 </style>
 
-<section class="inicio-section text-center">
+<section class="inicio-section">
     <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo MiTiendita" class="logo">
     <h1>Bienvenido a MiTiendita</h1>
-    <p class="description">
-        MiTiendita es una app diseñada para ayudarte a hacer predicciones sobre la rentabilidad de tu tienda.
-        Podrás agregar productos, gastos y calcular si obtendrás ganancias o pérdidas.
-    </p>
-    <p class="description">
-        Visualiza gráficas de ganancias brutas, netas y tus gastos totales.
-    </p>
+    <p>Tu herramienta inteligente para conocer, gestionar y analizar tu tienda.</p>
 </section>
 
-<section class="info-section text-center">
-    <h3 class="mb-3">📊 Gráficas que tenemos</h3>
-    <p>Manejamos todas estas gráficas: porcentaje de ganancia por producto, resumen financiero, top 5 productos por inventario y ganancia promedio por categoría.</p>
-    <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Gráfica decorativa">
+<section class="info-section">
+    <div class="container">
+        <h2 class="text-center">📊 Gráficas que tenemos</h2>
+        <div class="info-row">
+            <div class="info-img">
+                <img src="{{ url_for('static', filename='img/foto.png') }}" alt="Gráfica ejemplo" class="img-grafico">
+            </div>
+            <div class="info-text">
+                <p>
+                    Manejamos todas estas gráficas: <strong>porcentaje de ganancia por producto</strong>,
+                    <strong>resumen financiero</strong>,
+                    <strong>top 5 productos por inventario</strong> y
+                    <strong>ganancia promedio por categoría</strong>. <br><br>
+                    Visualízalo todo de forma clara para tomar mejores decisiones en tu negocio.
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="contacto-section text-center">
-    <h3 class="mb-3">📞 Contáctanos</h3>
+<section class="contacto-section">
+    <h3>📞 Contáctanos</h3>
     <p><strong>📱 Teléfono:</strong> +57 311 456 7890</p>
-    <p>
-        <strong>📸 Instagram:</strong>
-        <a href="https://instagram.com/tunombre" target="_blank">@tunombre</a>
-    </p>
+    <p><strong>📸 Instagram:</strong> <a href="https://instagram.com/tunombre" target="_blank">@tunombre</a></p>
     <p><strong>👤 Desarrollado por:</strong> Juan Pérez</p>
 </section>
 {% endblock %}
