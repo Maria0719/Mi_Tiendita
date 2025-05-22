@@ -1,104 +1,110 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>  <!-- Define el tipo de documento HTML5 -->
+<html lang="es">  <!-- Idioma de la página: español -->
 <head>
-    <meta charset="UTF-8">
-    <title>MiTiendita</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">  <!-- Codificación de caracteres UTF-8 -->
+    <title>MiTiendita</title>  <!-- Título de la pestaña -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Responsive: escala en dispositivos móviles -->
 
-    <!-- Bootstrap y fuentes -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Bootstrap y fuentes externas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">  <!-- Estilos Bootstrap -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">  <!-- Fuentes Google Fonts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <!-- Estilos CSS personalizados -->
 
     <style>
+        /* Estilos base para html y body */
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden;
-            font-family: 'Poppins', sans-serif;
+            margin: 0;  /* Sin margen externo */
+            padding: 0;  /* Sin padding */
+            width: 100%;  /* Ancho completo */
+            overflow-x: hidden;  /* Evita scroll horizontal */
+            font-family: 'Poppins', sans-serif;  /* Fuente principal */
         }
 
+        /* Estilos para títulos h1, h2, h3 */
         h1, h2, h3 {
-            font-family: 'Comic Neue', cursive;
-            font-weight: 700;
-            color: #333;
+            font-family: 'Comic Neue', cursive;  /* Fuente especial para títulos */
+            font-weight: 700;  /* Negrita */
+            color: #333;  /* Color gris oscuro */
         }
 
-        /* Botón toggle */
+        /* Botón toggle para abrir/cerrar sidebar */
         #toggle-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background-color: #6c63ff;
-            color: white;
-            padding: 10px 15px;
-            font-size: 22px;
-            cursor: pointer;
-            z-index: 1001;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: fixed;  /* Fijo en pantalla */
+            top: 15px;  /* Distancia arriba */
+            left: 15px;  /* Distancia a la izquierda */
+            background-color: #6c63ff;  /* Color morado */
+            color: white;  /* Texto blanco */
+            padding: 10px 15px;  /* Espaciado interno */
+            font-size: 22px;  /* Tamaño del icono */
+            cursor: pointer;  /* Cursor de mano */
+            z-index: 1001;  /* Por encima de otros elementos */
+            border-radius: 8px;  /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);  /* Sombra */
         }
 
-        /* Sidebar animado */
+        /* Sidebar (barra lateral) */
         .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            background: linear-gradient(180deg, #6c63ff, #a29bfe);
-            overflow-x: hidden;
-            transition: 0.3s;
-            padding-top: 60px;
+            height: 100%;  /* Alto completo de la pantalla */
+            width: 0;  /* Inicialmente oculta */
+            position: fixed;  /* Fija en pantalla */
+            z-index: 1000;  /* Justo debajo del botón toggle */
+            top: 0; left: 0;  /* Arriba izquierda */
+            background: linear-gradient(180deg, #6c63ff, #a29bfe);  /* Fondo degradado morado */
+            overflow-x: hidden;  /* Oculta scroll horizontal */
+            transition: 0.3s;  /* Transición suave para abrir/cerrar */
+            padding-top: 60px;  /* Espacio arriba para no tapar toggle */
         }
 
+        /* Links dentro del sidebar */
         .sidebar a {
-            padding: 14px 25px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-            transition: all 0.2s;
+            padding: 14px 25px;  /* Espaciado */
+            text-decoration: none;  /* Sin subrayado */
+            font-size: 18px;  /* Tamaño texto */
+            color: white;  /* Texto blanco */
+            display: block;  /* Cada link en una línea */
+            transition: all 0.2s;  /* Transición para hover */
         }
 
+        /* Efecto hover en links */
         .sidebar a:hover {
-            background-color: rgba(255,255,255,0.15);
-            padding-left: 30px;
+            background-color: rgba(255,255,255,0.15);  /* Fondo semitransparente */
+            padding-left: 30px;  /* Mueve texto a la derecha */
         }
 
+        /* Clase para abrir sidebar */
         .sidebar.open {
-            width: 220px;
+            width: 220px;  /* Ancho cuando está abierto */
         }
 
+        /* Contenido principal */
         .main-content {
-            margin-left: 0;
-            transition: margin-left 0.3s;
-            padding: 0;
+            margin-left: 0;  /* Sin margen cuando sidebar cerrado */
+            transition: margin-left 0.3s;  /* Transición suave */
+            padding: 0;  /* Sin padding */
         }
 
+        /* Cuando sidebar está abierto, desplaza contenido */
         .main-content.shifted {
-            margin-left: 220px;
+            margin-left: 220px;  /* Mueve contenido para dejar espacio al sidebar */
         }
 
+        /* Adaptación para pantallas pequeñas */
         @media (max-width: 768px) {
             .main-content.shifted {
-                margin-left: 0;
+                margin-left: 0;  /* No desplaza contenido */
             }
-
             .sidebar.open {
-                width: 100%;
+                width: 100%;  /* Sidebar ocupa toda la pantalla */
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Botón hamburguesa -->
+    <!-- Botón hamburguesa para toggle sidebar -->
     <div id="toggle-btn" onclick="toggleSidebar()">☰</div>
 
-    <!-- Barra lateral -->
+    <!-- Barra lateral con enlaces -->
     <div id="sidebar" class="sidebar">
         <a href="{{ url_for('inicio') }}">🏠 Inicio</a>
         <a href="{{ url_for('index') }}">📦 Productos</a>
@@ -110,18 +116,18 @@
         <a href="{{ url_for('resumen_general') }}">🧾 Resumen General</a>
     </div>
 
-    <!-- Contenido principal -->
+    <!-- Contenido principal donde se inyecta contenido según la ruta -->
     <div id="main" class="main-content">
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Script para abrir/cerrar menú -->
+    <!-- Script para abrir/cerrar sidebar -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             const main = document.getElementById("main");
-            sidebar.classList.toggle("open");
-            main.classList.toggle("shifted");
+            sidebar.classList.toggle("open");  // Alterna clase para abrir/cerrar sidebar
+            main.classList.toggle("shifted");  // Alterna margen para desplazar contenido
         }
     </script>
 </body>

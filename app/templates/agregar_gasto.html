@@ -1,123 +1,122 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  /* Usa la plantilla base.html como estructura principal */
 
-{% block content %}
+{% block content %}  /* Inicia el bloque de contenido específico de esta página */
+
 <style>
-    .gasto-hero {
-        background: linear-gradient(135deg, #6c63ff, #a29bfe);
-        color: white;
-        text-align: center;
-        padding: 80px 20px 60px;
-        position: relative;
-        overflow: hidden;
-    }
+.gasto-hero {  /* Contenedor del encabezado con fondo degradado y texto centrado */
+    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
+    color: white;  /* Texto blanco */
+    text-align: center;  /* Centrado horizontal */
+    padding: 80px 20px 60px;  /* Espaciado interno (arriba, lados, abajo) */
+    position: relative;  /* Permite posicionar hijos absolutamente */
+    overflow: hidden;  /* Oculta contenido que sobresalga */
+}
 
-    .gasto-hero::before {
-        content: "";
-        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
-        opacity: 0.08;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        animation: moveBg 60s linear infinite;
-        z-index: 0;
-    }
+.gasto-hero::before {  /* Pseudo-elemento para imagen de fondo decorativa */
+    content: "";  /* Sin contenido visible */
+    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen fondo */
+    opacity: 0.08;  /* Muy transparente */
+    position: absolute;  /* Posición absoluta para cubrir el contenedor */
+    top: 0; left: 0;  /* Esquina superior izquierda */
+    width: 100%; height: 100%;  /* Cubriendo todo el contenedor */
+    animation: moveBg 60s linear infinite;  /* Animación de movimiento lento */
+    z-index: 0;  /* Detrás del texto */
+}
 
+.gasto-hero h1 {  /* Estilo del título principal */
+    position: relative;  /* Para superponer sobre la imagen */
+    font-size: 2.8rem;  /* Tamaño grande */
+    font-weight: 800;  /* Muy negrita */
+    font-family: 'Comic Sans MS', 'Poppins', cursive;  /* Tipografía divertida */
+    z-index: 2;  /* Encima de la imagen */
+}
+
+.icono-flotante {  /* Estilo para iconos decorativos que flotan */
+    position: absolute;  /* Posición absoluta */
+    width: 50px;  /* Tamaño fijo */
+    z-index: 1;  /* Entre fondo y título */
+    animation: flotar 4s ease-in-out infinite;  /* Movimiento vertical continuo */
+    opacity: 0.9;  /* Ligeramente transparente */
+}
+
+/* Posiciones y retrasos distintos para cada icono para movimiento natural */
+.icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
+.icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
+.icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
+.icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
+
+@keyframes moveBg {  /* Animación que mueve la imagen de fondo arriba y abajo */
+    0%, 100% { background-position: top center; }
+    50% { background-position: bottom center; }
+}
+
+@keyframes flotar {  /* Animación para que los iconos se muevan verticalmente */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.formulario-gasto {  /* Contenedor del formulario */
+    padding: 60px 20px;  /* Espaciado interno */
+    background-color: #fdfdff;  /* Fondo casi blanco */
+}
+
+.formulario-gasto form {  /* Estilo del formulario */
+    background-color: white;  /* Fondo blanco */
+    padding: 30px;  /* Espacio interno */
+    border-radius: 15px;  /* Bordes redondeados */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);  /* Sombra suave */
+    max-width: 700px;  /* Ancho máximo */
+    margin: auto;  /* Centrado horizontal */
+}
+
+.formulario-gasto .btn-primary {  /* Botón principal (guardar gasto) */
+    border-radius: 30px;  /* Bordes muy redondeados */
+    font-weight: bold;  /* Texto en negrita */
+}
+
+.formulario-gasto .btn-secondary {  /* Botón secundario (volver) */
+    display: block;  /* Mostrar como bloque */
+    margin: 30px auto 0;  /* Margen arriba y centrado horizontal */
+    border-radius: 30px;  /* Bordes redondeados */
+    font-weight: 500;  /* Grosor medio */
+    width: fit-content;  /* Tamaño ajustado al contenido */
+}
+
+@media (max-width: 768px) {  /* Ajustes para pantallas pequeñas */
     .gasto-hero h1 {
-        position: relative;
-        font-size: 2.8rem;
-        font-weight: 800;
-        font-family: 'Comic Sans MS', 'Poppins', cursive;
-        z-index: 2;
+        font-size: 2rem;  /* Reducir tamaño del título */
     }
-
-    .icono-flotante {
-        position: absolute;
-        width: 50px;
-        z-index: 1;
-        animation: flotar 4s ease-in-out infinite;
-        opacity: 0.9;
-    }
-
-    .icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
-    .icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
-    .icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
-    .icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
-
-    @keyframes moveBg {
-        0%, 100% { background-position: top center; }
-        50% { background-position: bottom center; }
-    }
-
-    @keyframes flotar {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-
-    .formulario-gasto {
-        padding: 60px 20px;
-        background-color: #fdfdff;
-    }
-
-    .formulario-gasto form {
-        background-color: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-        max-width: 700px;
-        margin: auto;
-    }
-
-    .formulario-gasto .btn-primary {
-        border-radius: 30px;
-        font-weight: bold;
-    }
-
-    .formulario-gasto .btn-secondary {
-        display: block;
-        margin: 30px auto 0;
-        border-radius: 30px;
-        font-weight: 500;
-        width: fit-content;
-    }
-
-    @media (max-width: 768px) {
-        .gasto-hero h1 {
-            font-size: 2rem;
-        }
-    }
+}
 </style>
 
-<!-- ENCABEZADO -->
-<section class="gasto-hero">
-    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+<section class="gasto-hero">  <!-- Encabezado con fondo y animaciones -->
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">  <!-- Iconos flotantes -->
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h1>💸 Agregar Gasto</h1>
+    <h1>💸 Agregar Gasto</h1>  <!-- Título principal -->
 </section>
 
-<!-- FORMULARIO -->
-<section class="formulario-gasto">
-    <form action="{{ url_for('agregar_gasto') }}" method="POST">
-        <div class="row g-4">
-            <div class="col-md-8">
-                <label for="descripcion" class="form-label">Descripción del Gasto</label>
-                <input type="text" id="descripcion" class="form-control" name="descripcion" required>
+<section class="formulario-gasto">  <!-- Contenedor del formulario -->
+    <form action="{{ url_for('agregar_gasto') }}" method="POST">  <!-- Formulario que envía a 'agregar_gasto' -->
+        <div class="row g-4">  <!-- Fila con separación -->
+            <div class="col-md-8">  <!-- Columna para descripción -->
+                <label for="descripcion" class="form-label">Descripción del Gasto</label>  <!-- Etiqueta -->
+                <input type="text" id="descripcion" class="form-control" name="descripcion" required>  <!-- Campo texto obligatorio -->
             </div>
 
-            <div class="col-md-4">
-                <label for="valor" class="form-label">Valor ($)</label>
-                <input type="number" id="valor" class="form-control" name="valor" required>
+            <div class="col-md-4">  <!-- Columna para valor -->
+                <label for="valor" class="form-label">Valor ($)</label>  <!-- Etiqueta -->
+                <input type="number" id="valor" class="form-control" name="valor" required>  <!-- Campo número obligatorio -->
             </div>
 
-            <div class="col-md-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary w-100">💾 Guardar Gasto</button>
+            <div class="col-md-12 d-flex justify-content-end">  <!-- Contenedor para botón -->
+                <button type="submit" class="btn btn-primary w-100">💾 Guardar Gasto</button>  <!-- Botón guardar que ocupa todo el ancho -->
             </div>
         </div>
     </form>
 
-    <a href="{{ url_for('gastos') }}" class="btn btn-secondary">⬅ Volver al listado de gastos</a>
+    <a href="{{ url_for('gastos') }}" class="btn btn-secondary">⬅ Volver al listado de gastos</a>  <!-- Botón para volver al listado -->
 </section>
-{% endblock %}
+
+{% endblock %}  /* Fin del bloque de contenido */

@@ -1,247 +1,256 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  /* Usa el layout base */
 
-{% block content %}
+{% block content %}  /* Inicio del bloque contenido */
+
 <style>
-    /* === HERO SECCIÓN ESTILO PARARICE === */
-    .hero-divertido {
-        position: relative;
-        min-height: 100vh;
-        background: linear-gradient(180deg, #a29bfe 0%, #d0c4ff 100%);
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 60px 20px;
-        color: #2c2c54;
-        z-index: 1;
-    }
+/* HERO DIVERTIDO - fondo degradado, elementos flotantes y animaciones */
+.hero-divertido {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #a29bfe 0%, #d0c4ff 100%);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px;
+    color: #2c2c54;
+    z-index: 1;
+}
 
-    .hero-divertido::before {
-        content: "";
-        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
-        opacity: 0.1;
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        animation: moveBg 60s linear infinite;
-    }
+.hero-divertido::before {  /* Imagen decorativa con transparencia y animación */
+    content: "";
+    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+    opacity: 0.1;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    animation: moveBg 60s linear infinite;
+}
 
-    @keyframes moveBg {
-        0% { background-position: center top; }
-        50% { background-position: center bottom; }
-        100% { background-position: center top; }
-    }
+@keyframes moveBg {  /* Movimiento lento vertical del fondo */
+    0% { background-position: center top; }
+    50% { background-position: center bottom; }
+    100% { background-position: center top; }
+}
 
-    .hero-content {
-        position: relative;
-        z-index: 2;
-        max-width: 900px;
-        animation: fadePop 1.5s ease-out both;
-    }
+/* Contenido principal con animación de aparición */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    animation: fadePop 1.5s ease-out both;
+}
 
-    @keyframes fadePop {
-        0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-        100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
+@keyframes fadePop {  /* Efecto fade y pop */
+    0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
 
-    .hero-logo {
-        width: 100px;
-        margin-bottom: 20px;
-        animation: float 3s ease-in-out infinite;
-    }
+/* Logo animado flotante */
+.hero-logo {
+    width: 100px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
 
-    .hero-title {
-        font-size: 4rem;
-        font-weight: 900;
-        font-family: 'Comic Sans MS', 'Poppins', cursive;
-        margin-bottom: 15px;
-        color: #341f97;
-    }
+@keyframes float {  /* Movimiento suave vertical */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
-    .hero-subtitle {
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: #5f27cd;
-        margin-bottom: 20px;
-    }
+/* Títulos y textos del hero */
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    font-family: 'Comic Sans MS', 'Poppins', cursive;
+    margin-bottom: 15px;
+    color: #341f97;
+}
 
-    .hero-text {
-        font-size: 1.2rem;
-        max-width: 650px;
-        margin: 0 auto;
-        color: #444;
-    }
+.hero-subtitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #5f27cd;
+    margin-bottom: 20px;
+}
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
+.hero-text {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 0 auto;
+    color: #444;
+}
 
-    /* === ELEMENTOS FLOTANTES === */
-    .float-icon {
-        position: absolute;
-        width: 60px;
-        animation: floatAlt 4s ease-in-out infinite;
-        z-index: 1;
-        opacity: 0.8;
-    }
+/* Iconos flotantes decorativos */
+.float-icon {
+    position: absolute;
+    width: 60px;
+    animation: floatAlt 4s ease-in-out infinite;
+    z-index: 1;
+    opacity: 0.8;
+}
 
-    .float-icon:nth-child(1) {
-        top: 15%; left: 10%;
-        animation-delay: 0s;
-    }
-    .float-icon:nth-child(2) {
-        top: 30%; right: 12%;
-        animation-delay: 1.5s;
-    }
-    .float-icon:nth-child(3) {
-        bottom: 20%; left: 8%;
-        animation-delay: 3s;
-    }
-    .float-icon:nth-child(4) {
-        bottom: 18%; right: 15%;
-        animation-delay: 2s;
-    }
+.float-icon:nth-child(1) {
+    top: 15%; left: 10%;
+    animation-delay: 0s;
+}
+.float-icon:nth-child(2) {
+    top: 30%; right: 12%;
+    animation-delay: 1.5s;
+}
+.float-icon:nth-child(3) {
+    bottom: 20%; left: 8%;
+    animation-delay: 3s;
+}
+.float-icon:nth-child(4) {
+    bottom: 18%; right: 15%;
+    animation-delay: 2s;
+}
 
-    @keyframes floatAlt {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
-    }
+@keyframes floatAlt {  /* Movimiento alternativo vertical */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
 
-    /* === SECCIÓN DESTACADA ANIMADA === */
-    .beneficios-section {
-        background: linear-gradient(135deg, #6c63ff, #a29bfe);
-        padding: 80px 20px;
-        color: white;
-    }
+/* Sección beneficios con fondo degradado y texto blanco */
+.beneficios-section {
+    background: linear-gradient(135deg, #6c63ff, #a29bfe);
+    padding: 80px 20px;
+    color: white;
+}
 
-    .beneficios-container {
-        max-width: 1200px;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 50px;
-        justify-content: center;
-    }
+/* Contenedor flexible para texto e imagen */
+.beneficios-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
+    justify-content: center;
+}
 
-    .beneficios-texto {
-        flex: 1;
-        min-width: 280px;
-        text-align: left;
-    }
+/* Texto beneficios */
+.beneficios-texto {
+    flex: 1;
+    min-width: 280px;
+    text-align: left;
+}
 
-    .beneficios-texto h2 {
-        font-size: 2.3rem;
-        margin-bottom: 30px;
-        font-weight: 800;
-        line-height: 1.2;
-    }
+.beneficios-texto h2 {
+    font-size: 2.3rem;
+    margin-bottom: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+}
 
-    .destacado {
-        background: -webkit-linear-gradient(#00fdd8, #80ffea);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+/* Texto destacado con degradado y clip de fondo */
+.destacado {
+    background: -webkit-linear-gradient(#00fdd8, #80ffea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-    .beneficios-texto ul {
-        list-style: none;
-        padding: 0;
-        font-size: 1.15rem;
-        line-height: 2;
-    }
+.beneficios-texto ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1.15rem;
+    line-height: 2;
+}
 
-    .beneficios-texto li {
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-    }
+.beneficios-texto li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
 
-    .beneficios-texto li span {
-        font-size: 1.5rem;
-        margin-right: 12px;
-        animation: float 2.5s ease-in-out infinite;
-    }
+.beneficios-texto li span {
+    font-size: 1.5rem;
+    margin-right: 12px;
+    animation: float 2.5s ease-in-out infinite;
+}
 
-    .beneficios-imagen {
-        flex: 1;
-        min-width: 280px;
-        text-align: center;
-    }
+/* Imagen beneficios */
+.beneficios-imagen {
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
+}
 
-    .beneficios-imagen img {
-        max-width: 100%;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        animation: glowImage 6s ease-in-out infinite;
-    }
+.beneficios-imagen img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: glowImage 6s ease-in-out infinite;
+}
 
-    @keyframes glowImage {
-        0%, 100% { box-shadow: 0 0 25px #a29bfe; }
-        50% { box-shadow: 0 0 50px #6c63ff; }
-    }
+@keyframes glowImage {  /* Efecto de brillo */
+    0%, 100% { box-shadow: 0 0 25px #a29bfe; }
+    50% { box-shadow: 0 0 50px #6c63ff; }
+}
 
-    /* === SECCIÓN INFORMATIVA === */
-    .info-section {
-        background-color: #ffffff;
-        color: #333;
-        padding: 60px 20px;
-        text-align: center;
-    }
+/* Sección informativa con tarjetas */
+.info-section {
+    background-color: #ffffff;
+    color: #333;
+    padding: 60px 20px;
+    text-align: center;
+}
 
-    .info-grid {
-        display: grid;
-        gap: 40px;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+.info-grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-    .info-card {
-        background-color: #f6f6ff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-        transition: transform 0.3s ease;
-    }
+.info-card {
+    background-color: #f6f6ff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+}
 
-    .info-card:hover {
-        transform: translateY(-5px);
-    }
+.info-card:hover {
+    transform: translateY(-5px);
+}
 
-    .info-card h3 {
-        margin-bottom: 10px;
-        color: #6c63ff;
-    }
+.info-card h3 {
+    margin-bottom: 10px;
+    color: #6c63ff;
+}
 
-    .info-card p {
-        font-size: 0.95rem;
-        color: #555;
-    }
+.info-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
 
-    .footer {
-        background-color: #6c63ff;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        font-size: 0.9rem;
-    }
+/* Pie de página */
+.footer {
+    background-color: #6c63ff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
 
-    @media (max-width: 768px) {
-        .hero-title { font-size: 2.5rem; }
-        .hero-subtitle { font-size: 1.2rem; }
-        .hero-text { font-size: 1rem; }
-        .beneficios-container { flex-direction: column; }
-        .beneficios-texto, .beneficios-imagen { text-align: center; }
-    }
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1.2rem; }
+    .hero-text { font-size: 1rem; }
+    .beneficios-container { flex-direction: column; }
+    .beneficios-texto, .beneficios-imagen { text-align: center; }
+}
 </style>
 
 <!-- HERO DIVERTIDO -->
 <section class="hero-divertido">
-    <!-- Elementos flotantes decorativos -->
+    <!-- Iconos flotantes decorativos -->
     <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="float-icon" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="float-icon" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="float-icon" alt="decor3">
@@ -298,7 +307,7 @@
 
 <!-- PIE DE PÁGINA -->
 <footer class="footer">
-    Desarrollado con 💜 por Maria Jose Ramirez &nbsp; | &nbsp; @amari_19.07
+    Desarrollado con 💜 por Maria Jose Ramirez &nbsp; | &nbsp; @amari_19.07 &nbsp; | &nbsp; github.com/Maria0719 
 </footer>
 
 {% endblock %}

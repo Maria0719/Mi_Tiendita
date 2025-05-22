@@ -1,116 +1,121 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  /* Hereda el layout base */
 
-{% block content %}
+{% block content %}  /* Inicio del bloque contenido */
+
 <style>
-    /* === SECCIÓN RESUMEN LLAMATIVA === */
-    .resumen-hero {
-        background: linear-gradient(135deg, #6c63ff, #a29bfe);
-        color: white;
-        text-align: center;
-        padding: 80px 20px 50px;
-        position: relative;
-        overflow: hidden;
-    }
+/* Encabezado llamativo con fondo degradado y elementos flotantes */
+.resumen-hero {
+    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
+    color: white;  /* Texto blanco */
+    text-align: center;  /* Texto centrado */
+    padding: 80px 20px 50px;  /* Espaciado */
+    position: relative;  /* Posición relativa */
+    overflow: hidden;  /* Oculta contenido fuera */
+}
 
-    .resumen-hero::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
-        opacity: 0.1;
-        animation: moveBg 60s linear infinite;
-        z-index: 0;
-    }
+.resumen-hero::before {  /* Imagen decorativa de fondo con transparencia y animación */
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+    opacity: 0.1;
+    animation: moveBg 60s linear infinite;
+    z-index: 0;
+}
 
-    @keyframes moveBg {
-        0% { background-position: top center; }
-        50% { background-position: bottom center; }
-        100% { background-position: top center; }
-    }
+@keyframes moveBg {  /* Movimiento lento vertical de fondo */
+    0% { background-position: top center; }
+    50% { background-position: bottom center; }
+    100% { background-position: top center; }
+}
 
+.resumen-hero h2 {  /* Título principal */
+    font-size: 3rem;
+    font-weight: 800;
+    z-index: 2;
+    position: relative;
+    font-family: 'Comic Sans MS', 'Poppins', cursive;
+}
+
+.float-resumen {  /* Iconos flotantes decorativos */
+    position: absolute;
+    width: 50px;
+    z-index: 1;
+    animation: floatAlt 4s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+/* Posiciones y delays para iconos */
+.float-resumen:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.float-resumen:nth-child(2) { top: 40%; right: 12%; animation-delay: 1.5s; }
+.float-resumen:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 3s; }
+.float-resumen:nth-child(4) { bottom: 12%; right: 15%; animation-delay: 2s; }
+
+@keyframes floatAlt {  /* Animación de subir y bajar */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* Contenedor para la tabla con padding y centrado */
+.resumen-tabla-container {
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    background-color: #fafaff;
+}
+
+/* Estilo tabla con fondo blanco, sombra y bordes redondeados */
+.resumen-tabla table {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    min-width: 80%;
+}
+
+/* Encabezado de tabla con fondo morado y texto blanco */
+.resumen-tabla thead {
+    background-color: #6c63ff;
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* Celdas tabla con padding y alineación vertical */
+.resumen-tabla td, .resumen-tabla th {
+    padding: 16px;
+    vertical-align: middle;
+}
+
+/* Estilos para badges que diferencian tipo producto o gasto */
+.resumen-tabla .badge {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+@media (max-width: 768px) {  /* Adaptación móvil */
     .resumen-hero h2 {
-        font-size: 3rem;
-        font-weight: 800;
-        z-index: 2;
-        position: relative;
-        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        font-size: 2rem;
     }
-
-    .float-resumen {
-        position: absolute;
-        width: 50px;
-        z-index: 1;
-        animation: floatAlt 4s ease-in-out infinite;
-        opacity: 0.8;
-    }
-
-    .float-resumen:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-    .float-resumen:nth-child(2) { top: 40%; right: 12%; animation-delay: 1.5s; }
-    .float-resumen:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 3s; }
-    .float-resumen:nth-child(4) { bottom: 12%; right: 15%; animation-delay: 2s; }
-
-    @keyframes floatAlt {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
-    }
-
-    /* === TABLA ESTILO BONITO === */
-    .resumen-tabla-container {
-        padding: 60px 20px;
-        display: flex;
-        justify-content: center;
-        background-color: #fafaff;
-    }
-
     .resumen-tabla table {
-        background-color: white;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        min-width: 80%;
+        font-size: 0.9rem;
     }
-
-    .resumen-tabla thead {
-        background-color: #6c63ff;
-        color: white;
-        font-size: 1.1rem;
-    }
-
-    .resumen-tabla td, .resumen-tabla th {
-        padding: 16px;
-        vertical-align: middle;
-    }
-
-    .resumen-tabla .badge {
-        font-size: 1rem;
-        padding: 8px 12px;
-        border-radius: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .resumen-hero h2 {
-            font-size: 2rem;
-        }
-
-        .resumen-tabla table {
-            font-size: 0.9rem;
-        }
-    }
+}
 </style>
 
-<!-- Encabezado colorido -->
+<!-- Encabezado llamativo -->
 <section class="resumen-hero">
+    <!-- Iconos flotantes decorativos -->
     <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="float-resumen" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="float-resumen" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="float-resumen" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="float-resumen" alt="decor4">
 
-    <h2>📊 Resumen General de tu Tienda</h2>
+    <h2>📊 Resumen General de tu Tienda</h2>  <!-- Título principal -->
 </section>
 
-<!-- Tabla visualmente mejorada -->
+<!-- Tabla con productos y gastos -->
 <section class="resumen-tabla-container">
     <div class="resumen-tabla">
         <table class="table table-hover table-bordered text-center">
@@ -125,28 +130,27 @@
                 </tr>
             </thead>
             <tbody>
-                {% for p in productos %}
+                {% for p in productos %}  <!-- Lista productos -->
                 <tr>
-                    <td><span class="badge bg-primary">Producto</span></td>
-                    <td>{{ p.nombre }}</td>
-                    <td>{{ p.precio_compra | money }}</td>
-                    <td>{{ p.precio_venta | money }}</td>
-                    <td>{{ p.stock }}</td>
-                    <td>{{ p.categoria }}</td>
+                    <td><span class="badge bg-primary">Producto</span></td>  <!-- Badge producto -->
+                    <td>{{ p.nombre }}</td>  <!-- Nombre producto -->
+                    <td>{{ p.precio_compra | money }}</td>  <!-- Precio compra -->
+                    <td>{{ p.precio_venta | money }}</td>  <!-- Precio venta -->
+                    <td>{{ p.stock }}</td>  <!-- Stock -->
+                    <td>{{ p.categoria }}</td>  <!-- Categoría -->
                 </tr>
                 {% endfor %}
-                {% for g in gastos %}
+                {% for g in gastos %}  <!-- Lista gastos -->
                 <tr>
-                    <td><span class="badge bg-danger">Gasto</span></td>
-                    <td>{{ g.descripcion }}</td>
-                    <td>-</td>
-                    <td>{{ g.valor | money }}</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td><span class="badge bg-danger">Gasto</span></td>  <!-- Badge gasto -->
+                    <td>{{ g.descripcion }}</td>  <!-- Descripción gasto -->
+                    <td>-</td>  <!-- Sin precio compra -->
+                    <td>{{ g.valor | money }}</td>  <!-- Valor gasto -->
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </section>
-{% endblock %}
+
+{% endblock %}  /* Fin bloque contenido */

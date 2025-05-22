@@ -1,11 +1,9 @@
-
 from flask import render_template, request, redirect, url_for, flash
 from app import app, db
 from app.models import Product, Gasto
-import io
-import base64
+import io, base64
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # Usa modo sin interfaz gráfica para generar imágenes en background
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -14,14 +12,14 @@ import os
 # Página de bienvenida
 @app.route('/')
 def inicio():
-    grafica_demo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABGoAAALv..."  # pega aquí el base64 completo que generé
+    grafica_demo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABGoAAALv..."  # Base64 ejemplo
     return render_template('inicio.html', grafica_demo=grafica_demo)
 
 
 # Página principal de productos
 @app.route('/index')
 def index():
-    products = Product.query.all()
+    products = Product.query.all()  # Trae todos los productos de la BD
     return render_template('index.html', productos=products)
 
 # Agregar un nuevo producto
@@ -29,35 +27,37 @@ def index():
 def agregar():
     if request.method == 'POST':
         try:
+            # Obtiene datos del formulario
             nombre = request.form['nombre']
             precio_compra = float(request.form['precio_compra'])
             ganancia_percent = float(request.form['ganancia'])
             stock = int(request.form['stock'])
             categoria = request.form['categoria']
+
+            # Calcula precio de venta con porcentaje
             precio_venta = precio_compra * (1 + ganancia_percent / 100)
 
-            nuevo_producto = Product(
-                nombre=nombre,
-                precio_compra=precio_compra,
-                precio_venta=precio_venta,
-                stock=stock,
-                categoria=categoria
-            )
+            # Crea y guarda nuevo producto en la BD
+            nuevo_producto = Product(nombre=nombre, precio_compra=precio_compra,
+                                    precio_venta=precio_venta, stock=stock, categoria=categoria)
             db.session.add(nuevo_producto)
             db.session.commit()
-            flash('Producto agregado exitosamente!', 'success')
+
+            flash('Producto agregado exitosamente!', 'success')  # Mensaje positivo
             return redirect(url_for('index'))
         except Exception as e:
-            flash(f'Ocurrió un error al agregar el producto: {e}', 'danger')
+            flash(f'Ocurrió un error al agregar el producto: {e}', 'danger')  # Mensaje error
             return redirect(url_for('agregar'))
-    return render_template('agregar.html')
+    return render_template('agregar.html')  # Muestra formulario GET
+
 
 # Editar producto
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
-    producto = Product.query.get_or_404(id)
+    producto = Product.query.get_or_404(id)  # Busca producto o 404
     if request.method == 'POST':
         try:
+            # Actualiza campos con datos del formulario
             producto.nombre = request.form['nombre']
             precio_compra = float(request.form['precio_compra'])
             ganancia_percent = float(request.form['ganancia'])
@@ -65,13 +65,14 @@ def editar(id):
             producto.precio_venta = precio_compra * (1 + ganancia_percent / 100)
             producto.stock = int(request.form['stock'])
             producto.categoria = request.form['categoria']
-            db.session.commit()
+
+            db.session.commit()  # Guarda cambios
             flash('Producto actualizado exitosamente!', 'success')
             return redirect(url_for('index'))
         except Exception as e:
             flash(f'Ocurrió un error al actualizar el producto: {e}', 'danger')
             return redirect(url_for('editar', id=id))
-    return render_template('editar.html', producto=producto)
+    return render_template('editar.html', producto=producto)  # Muestra formulario con datos
 
 # Eliminar producto
 @app.route('/eliminar_producto/<int:id>', methods=['POST'])
@@ -82,22 +83,24 @@ def eliminar_producto(id):
     flash('Producto eliminado exitosamente!', 'success')
     return redirect(url_for('index'))
 
+
 # Resumen de ganancias
 @app.route('/ganancias')
 def ganancias():
     productos = Product.query.all()
     gastos = Gasto.query.all()
-    valor_total_compra = sum(p.precio_compra * p.stock for p in productos)
-    valor_total_venta = sum(p.precio_venta * p.stock for p in productos)
-    total_ganancia = valor_total_venta - valor_total_compra
-    total_gastos = sum(g.valor for g in gastos)
-    ganancia_final = total_ganancia - total_gastos
 
-    return render_template('ganancias.html', 
-                valor_compra_total=valor_total_compra, 
-                valor_venta_total=valor_total_venta, 
-                total_gastos=total_gastos, 
-                ganancias_total=ganancia_final)
+    valor_total_compra = sum(p.precio_compra * p.stock for p in productos)  # Total costo inventario
+    valor_total_venta = sum(p.precio_venta * p.stock for p in productos)     # Total precio venta inventario
+    total_ganancia = valor_total_venta - valor_total_compra                  # Ganancia bruta
+    total_gastos = sum(g.valor for g in gastos)                              # Total gastos
+    ganancia_final = total_ganancia - total_gastos                           # Ganancia neta
+
+    return render_template('ganancias.html',
+                        valor_compra_total=valor_total_compra,
+                        valor_venta_total=valor_total_venta,
+                        total_gastos=total_gastos,
+                        ganancias_total=ganancia_final)
 
 # Página de gráficas con 4 gráficos
 @app.route('/graficas')

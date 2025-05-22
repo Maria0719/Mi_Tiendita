@@ -1,138 +1,146 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  /* Hereda el diseño base */
 
-{% block content %}
+{% block content %}  /* Inicia el bloque de contenido */
+
 <style>
-    .editar-hero {
-        background: linear-gradient(135deg, #6c63ff, #a29bfe);
-        color: white;
-        text-align: center;
-        padding: 80px 20px 60px;
-        position: relative;
-        overflow: hidden;
-    }
+.editar-hero {  /* Contenedor del encabezado con degradado */
+    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
+    color: white;  /* Texto blanco */
+    text-align: center;  /* Centrado */
+    padding: 80px 20px 60px;  /* Espaciado interno */
+    position: relative;  /* Posición relativa para hijos absolutos */
+    overflow: hidden;  /* Oculta desbordes */
+}
 
-    .editar-hero::before {
-        content: "";
-        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
-        opacity: 0.08;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        animation: moveBg 60s linear infinite;
-        z-index: 0;
-    }
+.editar-hero::before {  /* Imagen decorativa de fondo */
+    content: "";
+    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen */
+    opacity: 0.08;  /* Transparente */
+    position: absolute;  /* Posición absoluta */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    animation: moveBg 60s linear infinite;  /* Movimiento lento */
+    z-index: 0;  /* Detrás del contenido */
+}
 
+.editar-hero h1 {  /* Título */
+    position: relative;
+    font-size: 2.8rem;
+    font-weight: 800;
+    font-family: 'Comic Sans MS', 'Poppins', cursive;
+    z-index: 2;
+}
+
+.icono-flotante {  /* Iconos decorativos flotantes */
+    position: absolute;
+    width: 50px;
+    z-index: 1;
+    animation: flotar 4s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+.icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
+.icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
+.icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
+.icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
+
+@keyframes moveBg {  /* Animación fondo */
+    0%, 100% { background-position: top center; }
+    50% { background-position: bottom center; }
+}
+
+@keyframes flotar {  /* Animación iconos */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.formulario-editar {  /* Contenedor formulario */
+    padding: 60px 20px;
+    background-color: #fdfdff;
+}
+
+.formulario-editar form {  /* Formulario con fondo y sombra */
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    max-width: 800px;
+    margin: auto;
+}
+
+.formulario-editar .btn-success {  /* Botón guardar */
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.formulario-editar .btn-secondary {  /* Botón volver */
+    display: block;
+    margin: 20px auto 0;
+    border-radius: 30px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+@media (max-width: 768px) {  /* Adaptación móvil */
     .editar-hero h1 {
-        position: relative;
-        font-size: 2.8rem;
-        font-weight: 800;
-        font-family: 'Comic Sans MS', 'Poppins', cursive;
-        z-index: 2;
+        font-size: 2rem;
     }
-
-    .icono-flotante {
-        position: absolute;
-        width: 50px;
-        z-index: 1;
-        animation: flotar 4s ease-in-out infinite;
-        opacity: 0.9;
-    }
-
-    .icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
-    .icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
-    .icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
-    .icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
-
-    @keyframes moveBg {
-        0%, 100% { background-position: top center; }
-        50% { background-position: bottom center; }
-    }
-
-    @keyframes flotar {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-
-    .formulario-editar {
-        padding: 60px 20px;
-        background-color: #fdfdff;
-    }
-
-    .formulario-editar form {
-        background-color: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-        max-width: 800px;
-        margin: auto;
-    }
-
-    .formulario-editar .btn-success {
-        border-radius: 30px;
-        font-weight: bold;
-    }
-
-    .formulario-editar .btn-secondary {
-        display: block;
-        margin: 20px auto 0;
-        border-radius: 30px;
-        font-weight: 500;
-        width: fit-content;
-    }
-
-    @media (max-width: 768px) {
-        .editar-hero h1 {
-            font-size: 2rem;
-        }
-    }
+}
 </style>
 
 <!-- HERO -->
 <section class="editar-hero">
-    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">  <!-- Iconos flotantes -->
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h1>✏️ Editar Producto</h1>
+    <h1>✏️ Editar Producto</h1>  <!-- Título -->
 </section>
 
 <!-- FORMULARIO -->
 <section class="formulario-editar">
     <form action="{{ url_for('editar', id=producto.id) }}" method="POST" class="row g-3 mb-4">
+        <!-- Envía formulario con método POST a la ruta editar con id del producto -->
+
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre del Producto</label>
             <input type="text" id="nombre" class="form-control" name="nombre" value="{{ producto.nombre }}" required>
+            <!-- Campo nombre con valor inicial -->
         </div>
 
         <div class="col-md-3">
             <label for="precio_compra" class="form-label">Precio de Compra</label>
             <input type="number" step="0.01" id="precio_compra" class="form-control" name="precio_compra" value="{{ producto.precio_compra }}" required>
+            <!-- Campo precio compra con valor inicial -->
         </div>
 
         <div class="col-md-3">
             <label for="ganancia" class="form-label">Porcentaje de Ganancia (%)</label>
             {% set ganancia_percent = ((producto.precio_venta - producto.precio_compra) / producto.precio_compra) * 100 %}
             <input type="number" step="0.01" id="ganancia" class="form-control" name="ganancia" value="{{ ganancia_percent | round(2) }}" required>
+            <!-- Campo ganancia calculada al vuelo -->
         </div>
 
         <div class="col-md-3">
             <label for="stock" class="form-label">Stock</label>
             <input type="number" id="stock" class="form-control" name="stock" value="{{ producto.stock }}" required>
+            <!-- Campo stock con valor inicial -->
         </div>
 
         <div class="col-md-6">
             <label for="categoria" class="form-label">Categoría</label>
             <input type="text" id="categoria" class="form-control" name="categoria" value="{{ producto.categoria }}">
+            <!-- Campo categoría con valor inicial -->
         </div>
 
         <div class="col-md-6">
             <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+            <!-- Botón enviar formulario -->
         </div>
     </form>
 
     <a href="{{ url_for('index') }}" class="btn btn-secondary">⬅ Volver a la lista de productos</a>
+    <!-- Botón para volver a la lista de productos -->
 </section>
 
-{% endblock %}
+{% endblock %}  <!-- Fin del bloque contenido -->
