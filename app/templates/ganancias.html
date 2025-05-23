@@ -1,104 +1,105 @@
-{% extends 'base.html' %}  /* Hereda el layout base */
+{% extends 'base.html' %}
 
-{% block content %}  
-
+{% block content %}
 <style>
-.ganancias-hero {  /* Contenedor del encabezado con degradado */
-    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
-    color: white;  /* Texto blanco */
-    text-align: center;  /* Centrado */
-    padding: 80px 20px 60px;  /* Espaciado */
-    position: relative;  /* Posición relativa */
-    overflow: hidden;  /* Oculta contenido que sobresalga */
-}
-
-.ganancias-hero::before {  /* Imagen decorativa de fondo */
-    content: "";
-    position: absolute;  /* Posición absoluta */
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen fondo */
-    opacity: 0.08;  /* Transparencia baja */
-    z-index: 0;  /* Detrás del contenido */
-    animation: moveBg 60s linear infinite;  /* Movimiento lento */
-}
-
-@keyframes moveBg {  /* Animación para mover imagen de fondo */
-    0%, 100% { background-position: top center; }
-    50% { background-position: bottom center; }
-}
-
-.ganancias-hero h2 {  /* Título principal */
-    position: relative;
-    font-size: 2.8rem;
-    font-weight: 800;
-    font-family: 'Comic Sans MS', 'Poppins', cursive;
-    z-index: 2;
-}
-
-.icono-flotante {  /* Iconos flotantes decorativos */
-    position: absolute;
-    width: 50px;
-    z-index: 1;
-    animation: flotar 4s ease-in-out infinite;
-    opacity: 0.9;
-}
-
-.icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
-.icono-flotante:nth-child(3) { top: 25%; right: 12%; animation-delay: 1s; }
-.icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
-.icono-flotante:nth-child(5) { bottom: 15%; right: 14%; animation-delay: 3s; }
-
-@keyframes flotar {  /* Animación de subir y bajar iconos */
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.ganancias-content {  /* Contenedor del contenido principal */
-    padding: 60px 20px;
-    background-color: #f9f9ff;
-}
-
-.ganancias-box {  /* Caja con sombra y fondo para resaltar */
-    background-color: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    max-width: 700px;
-    margin: auto;
-}
-
-.ganancias-box p {  /* Estilo de párrafos */
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-
-.ganancias-box small {  /* Texto pequeño para aclaraciones */
-    color: #6c757d;
-}
-
-hr {  /* Línea horizontal decorativa */
-    border-top: 2px solid #a29bfe;
-    margin: 30px 0;
-}
-
-@media (max-width: 768px) {  /* Adaptación móvil */
-    .ganancias-hero h2 {
-        font-size: 2rem;
+    .ganancias-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
     }
-}
+
+    .ganancias-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
+    }
+
+    @keyframes moveBg {
+        0%, 100% { background-position: top center; }
+        50% { background-position: bottom center; }
+    }
+
+    .ganancias-hero h2 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
+
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { top: 25%; right: 12%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 15%; right: 14%; animation-delay: 3s; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .ganancias-content {
+        padding: 60px 20px;
+        background-color: #f9f9ff;
+    }
+
+    .ganancias-box {
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .ganancias-box p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .ganancias-box small {
+        color: #6c757d;
+    }
+
+    hr {
+        border-top: 2px solid #a29bfe;
+        margin: 30px 0;
+    }
+
+    @media (max-width: 768px) {
+        .ganancias-hero h2 {
+            font-size: 2rem;
+        }
+    }
 </style>
 
 <!-- HERO VISUAL -->
 <section class="ganancias-hero">
-    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">  <!-- Iconos flotantes -->
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h2>📊 Resumen de Inventario</h2>  <!-- Título -->
+    <h2>📊 Resumen de Inventario</h2>
 </section>
 
-<!-- CONTENIDO PRINCIPAL -->
+<!-- CONTENIDO -->
 <section class="ganancias-content">
     <div class="ganancias-box">
         <p><strong>Total de Valor de Compra:</strong>
@@ -125,4 +126,4 @@ hr {  /* Línea horizontal decorativa */
     </div>
 </section>
 
-{% endblock %}  <!-- Fin del bloque contenido -->
+{% endblock %}

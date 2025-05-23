@@ -1,141 +1,143 @@
-{% extends 'base.html' %}  /* Usa la plantilla base.html como layout general */
+{% extends 'base.html' %}
 
-{% block content %} 
-
+{% block content %}
 <style>
-.agregar-hero {  /* Contenedor principal del encabezado con fondo degradado */
-    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
-    color: white;  /* Texto blanco para contraste */
-    text-align: center;  /* Centrado horizontal */
-    padding: 80px 20px 60px;  /* Espacio arriba, lados y abajo */
-    position: relative;  /* Permite posicionar elementos hijos */
-    overflow: hidden;  /* Oculta contenido que sobresalga */
-}
+    .agregar-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
 
-.agregar-hero::before {  /* Imagen decorativa de fondo */
-    content: "";  /* Elemento vacío */
-    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen fondo */
-    opacity: 0.08;  /* Muy tenue */
-    position: absolute;  /* Posición absoluta */
-    top: 0; left: 0;  /* Esquina superior izquierda */
-    width: 100%; height: 100%;  /* Cubre todo el contenedor */
-    animation: moveBg 60s linear infinite;  /* Movimiento lento e infinito */
-    z-index: 0;  /* Detrás del contenido */
-}
 
-.agregar-hero h1 {  /* Estilo del título principal */
-    position: relative;  /* Para superponer sobre fondo */
-    font-size: 2.8rem;  /* Tamaño grande */
-    font-weight: 800;  /* Muy negrita */
-    font-family: 'Comic Sans MS', 'Poppins', cursive;  /* Tipografía divertida */
-    z-index: 2;  /* Sobre la imagen */
-}
+lo mismo con este 
 
-.icono-flotante {  /* Iconos decorativos flotantes */
-    position: absolute;  /* Posicionamiento absoluto */
-    width: 50px;  /* Tamaño fijo */
-    z-index: 1;  /* Entre fondo y título */
-    animation: flotar 4s ease-in-out infinite;  /* Movimiento vertical repetitivo */
-    opacity: 0.9;  /* Semi transparentes */
-}
 
-/* Posicionamientos y animaciones con retrasos para los iconos */
-.icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
-.icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
-.icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
-.icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
-
-@keyframes moveBg {  /* Animación para mover la imagen de fondo */
-    0%, 100% { background-position: top center; }
-    50% { background-position: bottom center; }
-}
-
-@keyframes flotar {  /* Animación para que los iconos se muevan verticalmente */
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.formulario-agregar {  /* Contenedor del formulario */
-    padding: 60px 20px;  /* Espaciado interno */
-    background-color: #fdfdff;  /* Fondo muy claro */
-}
-
-.formulario-agregar form {  /* Estilos del formulario */
-    background-color: white;  /* Fondo blanco */
-    padding: 30px;  /* Espacio interno */
-    border-radius: 15px;  /* Bordes redondeados */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);  /* Sombra suave */
-    max-width: 850px;  /* Ancho máximo */
-    margin: auto;  /* Centrado horizontal */
-}
-
-.formulario-agregar .btn-primary {  /* Botón guardar */
-    border-radius: 30px;  /* Bordes redondeados */
-    font-weight: bold;  /* Texto en negrita */
-}
-
-.formulario-agregar .btn-secondary {  /* Botón volver */
-    display: block;  /* Se muestra como bloque */
-    margin: 30px auto 0;  /* Margen arriba y centrado */
-    border-radius: 30px;  /* Bordes redondeados */
-    font-weight: 500;  /* Peso medio */
-    width: fit-content;  /* Tamaño ajustado al contenido */
-}
-
-@media (max-width: 768px) {  /* Adaptación para pantallas pequeñas */
-    .agregar-hero h1 {
-        font-size: 2rem;  /* Reducir tamaño del título */
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
     }
-}
+
+    .agregar-hero::before {
+        content: "";
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: moveBg 60s linear infinite;
+        z-index: 0;
+    }
+
+    .agregar-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
+
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 18%; left: 10%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { bottom: 20%; left: 12%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 18%; right: 10%; animation-delay: 3s; }
+
+    @keyframes moveBg {
+        0%, 100% { background-position: top center; }
+        50% { background-position: bottom center; }
+    }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .formulario-agregar {
+        padding: 60px 20px;
+        background-color: #fdfdff;
+    }
+
+    .formulario-agregar form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        max-width: 850px;
+        margin: auto;
+    }
+
+    .formulario-agregar .btn-primary {
+        border-radius: 30px;
+        font-weight: bold;
+    }
+
+    .formulario-agregar .btn-secondary {
+        display: block;
+        margin: 30px auto 0;
+        border-radius: 30px;
+        font-weight: 500;
+        width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+        .agregar-hero h1 {
+            font-size: 2rem;
+        }
+    }
 </style>
 
 <!-- HERO ANIMADO -->
 <section class="agregar-hero">
-    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">  <!-- Iconos flotantes -->
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h1>🛒 Agregar Nuevo Producto</h1>  <!-- Título principal -->
+    <h1>🛒 Agregar Nuevo Producto</h1>
 </section>
 
 <!-- FORMULARIO -->
 <section class="formulario-agregar">
-    <form action="{{ url_for('agregar') }}" method="POST">  <!-- Formulario que envía a endpoint 'agregar' -->
-        <div class="row g-4">  <!-- Fila con espacio entre columnas -->
-
-            <div class="col-md-6">  <!-- Columna para nombre del producto -->
+    <form action="{{ url_for('agregar') }}" method="POST">
+        <div class="row g-4">
+            <div class="col-md-6">
                 <label for="nombre" class="form-label">Nombre del Producto</label>
-                <input type="text" id="nombre" class="form-control" name="nombre" required>  <!-- Campo texto obligatorio -->
+                <input type="text" id="nombre" class="form-control" name="nombre" required>
             </div>
 
-            <div class="col-md-3">  <!-- Columna para precio de compra -->
+            <div class="col-md-3">
                 <label for="precio_compra" class="form-label">Precio de Compra</label>
-                <input type="number" step="0.01" id="precio_compra" class="form-control" name="precio_compra" required>  <!-- Número decimal obligatorio -->
+                <input type="number" step="0.01" id="precio_compra" class="form-control" name="precio_compra" required>
             </div>
 
-            <div class="col-md-3">  <!-- Columna para porcentaje ganancia -->
+            <div class="col-md-3">
                 <label for="ganancia" class="form-label">Porcentaje de Ganancia (%)</label>
-                <input type="number" step="0.01" id="ganancia" class="form-control" name="ganancia" required>  <!-- Número decimal obligatorio -->
+                <input type="number" step="0.01" id="ganancia" class="form-control" name="ganancia" required>
             </div>
 
-            <div class="col-md-3">  <!-- Columna para stock -->
+            <div class="col-md-3">
                 <label for="stock" class="form-label">Stock</label>
-                <input type="number" id="stock" class="form-control" name="stock" required>  <!-- Número obligatorio -->
+                <input type="number" id="stock" class="form-control" name="stock" required>
             </div>
 
-            <div class="col-md-3">  <!-- Columna para categoría -->
+            <div class="col-md-3">
                 <label for="categoria" class="form-label">Categoría</label>
-                <input type="text" id="categoria" class="form-control" name="categoria">  <!-- Campo texto opcional -->
+                <input type="text" id="categoria" class="form-control" name="categoria">
             </div>
 
-            <div class="col-md-6 d-flex align-items-end">  <!-- Botón guardar -->
+            <div class="col-md-6 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary w-100">💾 Guardar Producto</button>
             </div>
-
         </div>
     </form>
 
-    <a href="{{ url_for('index') }}" class="btn btn-secondary">⬅ Volver a la lista de productos</a>  <!-- Botón para regresar -->
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">⬅ Volver a la lista de productos</a>
 </section>
-
-{% endblock %}  <!-- Fin del bloque de contenido -->
+{% endblock %}

@@ -1,107 +1,105 @@
-{% extends 'base.html' %}  /* Hereda el layout base */
+{% extends 'base.html' %}
 
 {% block content %}
-
 <style>
-.graficas-hero {  /* Contenedor encabezado con degradado */
-    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
-    color: white;  /* Texto blanco */
-    text-align: center;  /* Texto centrado */
-    padding: 80px 20px 60px;  /* Espaciado interno */
-    position: relative;  /* Posición relativa */
-    overflow: hidden;  /* Oculta contenido fuera de límites */
-}
-
-.graficas-hero::before {  /* Imagen decorativa de fondo */
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen fondo */
-    opacity: 0.08;  /* Transparencia baja */
-    z-index: 0;  /* Detrás del contenido */
-    animation: moveBg 60s linear infinite;  /* Animación suave */
-}
-
-@keyframes moveBg {  /* Movimiento imagen fondo */
-    0%, 100% { background-position: center top; }
-    50% { background-position: center bottom; }
-}
-
-.graficas-hero h1 {  /* Título principal */
-    position: relative;
-    font-size: 2.8rem;
-    font-weight: 800;
-    z-index: 2;
-    font-family: 'Comic Sans MS', 'Poppins', cursive;
-}
-
-.icono-flotante {  /* Iconos flotantes */
-    position: absolute;
-    width: 50px;
-    z-index: 1;
-    animation: flotar 4s ease-in-out infinite;
-    opacity: 0.9;
-}
-
-/* Posicionamiento y delay para cada icono */
-.icono-flotante:nth-child(2) { top: 18%; left: 12%; animation-delay: 0s; }
-.icono-flotante:nth-child(3) { bottom: 25%; left: 15%; animation-delay: 1s; }
-.icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
-.icono-flotante:nth-child(5) { bottom: 20%; right: 10%; animation-delay: 3s; }
-
-@keyframes flotar {  /* Animación subida y bajada */
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.graficas-container {  /* Contenedor de las gráficas */
-    padding: 60px 20px;
-    background-color: #f9f9ff;
-}
-
-.graficas-container .card {  /* Tarjetas de cada gráfica */
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-}
-
-.graficas-container .card-title {  /* Título de tarjeta */
-    font-weight: 700;
-    color: #6c63ff;
-}
-
-.graficas-container .card-body {  /* Cuerpo tarjeta */
-    padding: 30px;
-    background-color: white;
-}
-
-.graficas-container .text-muted {  /* Texto aclaratorio */
-    font-size: 0.95rem;
-}
-
-@media (max-width: 768px) {  /* Responsive para móviles */
-    .graficas-hero h1 {
-        font-size: 2rem;
+    .graficas-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
     }
-}
+
+    .graficas-hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        z-index: 0;
+        animation: moveBg 60s linear infinite;
+    }
+
+    @keyframes moveBg {
+        0%, 100% { background-position: center top; }
+        50% { background-position: center bottom; }
+    }
+
+    .graficas-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        z-index: 2;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+    }
+
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 18%; left: 12%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { bottom: 25%; left: 15%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { top: 25%; right: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .graficas-container {
+        padding: 60px 20px;
+        background-color: #f9f9ff;
+    }
+
+    .graficas-container .card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+    }
+
+    .graficas-container .card-title {
+        font-weight: 700;
+        color: #6c63ff;
+    }
+
+    .graficas-container .card-body {
+        padding: 30px;
+        background-color: white;
+    }
+
+    .graficas-container .text-muted {
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+        .graficas-hero h1 {
+            font-size: 2rem;
+        }
+    }
 </style>
 
 <!-- HERO CON ESTILO -->
 <section class="graficas-hero">
-    <!-- Iconos flotantes decorativos -->
     <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h1>📊 Gráficas Financieras</h1>  <!-- Título principal -->
+    <h1>📊 Gráficas Financieras</h1>
 </section>
 
 <!-- CONTENEDOR DE GRÁFICAS -->
 <section class="graficas-container">
 
-    <!-- Gráfica 1: Porcentaje de Ganancia por Producto -->
+    <!-- Gráfica 1 -->
     <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Porcentaje de Ganancia por Producto</h4>
@@ -122,7 +120,7 @@
         </div>
     </div>
 
-    <!-- Gráfica 2: Resumen Financiero -->
+    <!-- Gráfica 2 -->
     <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Resumen Financiero</h4>
@@ -142,7 +140,7 @@
         </div>
     </div>
 
-    <!-- Gráfica 3: Top 5 Productos por Valor de Inventario -->
+    <!-- Gráfica 3 -->
     <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Top 5 Productos por Valor de Inventario</h4>
@@ -161,7 +159,7 @@
         </div>
     </div>
 
-    <!-- Gráfica 4: Ganancia Promedio por Categoría -->
+    <!-- Gráfica 4 -->
     <div class="card">
         <div class="card-body">
             <h4 class="card-title text-center">Ganancia Promedio por Categoría</h4>
@@ -179,7 +177,6 @@
             {% endif %}
         </div>
     </div>
-
 </section>
 
-{% endblock %}  /* Fin bloque contenido */
+{% endblock %}

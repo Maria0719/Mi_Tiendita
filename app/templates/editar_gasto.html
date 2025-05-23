@@ -1,127 +1,121 @@
-{% extends 'base.html' %}  /* Hereda el layout base.html */
+{% extends 'base.html' %}
 
-{% block content %} 
-
+{% block content %}
 <style>
-.gasto-hero {  /* Contenedor encabezado con fondo degradado */
-    background: linear-gradient(135deg, #6c63ff, #a29bfe);  /* Degradado morado */
-    color: white;  /* Texto blanco */
-    text-align: center;  /* Centrado */
-    padding: 80px 20px 60px;  /* Espaciado */
-    position: relative;  /* Posicionamiento relativo */
-    overflow: hidden;  /* Oculta contenido que sobresalga */
-}
-
-.gasto-hero::before {  /* Imagen decorativa de fondo */
-    content: "";
-    background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;  /* Imagen fondo */
-    opacity: 0.08;  /* Transparencia baja */
-    position: absolute;  /* Posición absoluta */
-    top: 0; left: 0;
-    width: 100%; height: 100%;  /* Cubre todo el contenedor */
-    animation: moveBg 60s linear infinite;  /* Animación de movimiento lento */
-    z-index: 0;  /* Detrás del contenido */
-}
-
-.gasto-hero h1 {  /* Estilo del título */
-    position: relative;
-    font-size: 2.8rem;
-    font-weight: 800;
-    font-family: 'Comic Sans MS', 'Poppins', cursive;
-    z-index: 2;
-}
-
-.icono-flotante {  /* Iconos decorativos flotantes */
-    position: absolute;
-    width: 50px;
-    z-index: 1;
-    animation: flotar 4s ease-in-out infinite;
-    opacity: 0.9;
-}
-
-/* Posiciones y delays para cada icono */
-.icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
-.icono-flotante:nth-child(3) { top: 30%; right: 12%; animation-delay: 1s; }
-.icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
-.icono-flotante:nth-child(5) { bottom: 18%; right: 14%; animation-delay: 3s; }
-
-@keyframes moveBg {  /* Animación imagen de fondo */
-    0%, 100% { background-position: center top; }
-    50% { background-position: center bottom; }
-}
-
-@keyframes flotar {  /* Animación de subir y bajar iconos */
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.formulario-gasto {  /* Contenedor del formulario */
-    padding: 60px 20px;
-    background-color: #fdfdff;
-}
-
-.formulario-gasto form {  /* Formulario con fondo y sombra */
-    background-color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    max-width: 700px;
-    margin: auto;
-}
-
-.formulario-gasto .btn-success {  /* Botón guardar cambios */
-    border-radius: 30px;
-    font-weight: bold;
-}
-
-.formulario-gasto .btn-secondary {  /* Botón volver */
-    display: block;
-    margin: 30px auto 0;
-    border-radius: 30px;
-    font-weight: 500;
-    width: fit-content;
-}
-
-@media (max-width: 768px) {  /* Adaptación para móviles */
-    .gasto-hero h1 {
-        font-size: 2rem;
+    .gasto-hero {
+        background: linear-gradient(135deg, #6c63ff, #a29bfe);
+        color: white;
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
     }
-}
+
+    .gasto-hero::before {
+        content: "";
+        background: url("{{ url_for('static', filename='img/fondo_ilustrado.png') }}") no-repeat center/cover;
+        opacity: 0.08;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: moveBg 60s linear infinite;
+        z-index: 0;
+    }
+
+    .gasto-hero h1 {
+        position: relative;
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Comic Sans MS', 'Poppins', cursive;
+        z-index: 2;
+    }
+
+    .icono-flotante {
+        position: absolute;
+        width: 50px;
+        z-index: 1;
+        animation: flotar 4s ease-in-out infinite;
+        opacity: 0.9;
+    }
+
+    .icono-flotante:nth-child(2) { top: 15%; left: 10%; animation-delay: 0s; }
+    .icono-flotante:nth-child(3) { top: 30%; right: 12%; animation-delay: 1s; }
+    .icono-flotante:nth-child(4) { bottom: 20%; left: 12%; animation-delay: 2s; }
+    .icono-flotante:nth-child(5) { bottom: 18%; right: 14%; animation-delay: 3s; }
+
+    @keyframes moveBg {
+        0%, 100% { background-position: center top; }
+        50% { background-position: center bottom; }
+    }
+
+    @keyframes flotar {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .formulario-gasto {
+        padding: 60px 20px;
+        background-color: #fdfdff;
+    }
+
+    .formulario-gasto form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .formulario-gasto .btn-success {
+        border-radius: 30px;
+        font-weight: bold;
+    }
+
+    .formulario-gasto .btn-secondary {
+        display: block;
+        margin: 30px auto 0;
+        border-radius: 30px;
+        font-weight: 500;
+        width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+        .gasto-hero h1 {
+            font-size: 2rem;
+        }
+    }
 </style>
 
 <!-- HERO DECORATIVO -->
 <section class="gasto-hero">
-    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">  <!-- Iconos flotantes -->
+    <img src="{{ url_for('static', filename='img/sticker1.png') }}" class="icono-flotante" alt="decor1">
     <img src="{{ url_for('static', filename='img/sticker2.png') }}" class="icono-flotante" alt="decor2">
     <img src="{{ url_for('static', filename='img/sticker3.png') }}" class="icono-flotante" alt="decor3">
     <img src="{{ url_for('static', filename='img/sticker4.png') }}" class="icono-flotante" alt="decor4">
-    <h1>🧾 Editar Gasto</h1>  <!-- Título -->
+    <h1>🧾 Editar Gasto</h1>
 </section>
 
-<!-- FORMULARIO EDITAR GASTO -->
+<!-- FORMULARIO -->
 <section class="formulario-gasto">
     <form action="{{ url_for('editar_gasto', id=gasto.id) }}" method="POST" class="row g-3 mb-4">
-        <!-- Envía los datos a la ruta editar_gasto con el id del gasto -->
-
         <div class="col-md-8">
             <label for="descripcion" class="form-label">Descripción del Gasto</label>
             <input type="text" id="descripcion" class="form-control" name="descripcion" value="{{ gasto.descripcion }}" required>
-            <!-- Campo texto con valor inicial del gasto a editar -->
         </div>
 
         <div class="col-md-4">
             <label for="valor" class="form-label">Valor ($)</label>
             <input type="number" id="valor" class="form-control" name="valor" value="{{ gasto.valor }}" required>
-            <!-- Campo número con valor inicial del gasto -->
         </div>
 
         <div class="col-md-12">
             <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
-            <!-- Botón para enviar cambios -->
         </div>
     </form>
 
-    <a href="{{ url_for('gastos') }}" class="btn btn-secondary">⬅ Volver al listado de gastos</a>  <!-- Botón volver -->
+    <a href="{{ url_for('gastos') }}" class="btn btn-secondary">⬅ Volver al listado de gastos</a>
 </section>
-
-{% endblock %}  <!-- Fin del bloque contenido -->
+{% endblock %}
